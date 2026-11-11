@@ -1,0 +1,57 @@
+:host {
+  display: block;
+}
+
+.tabbar {
+  --background: var(--ink);
+  --border: 1px solid var(--rule);
+  height: calc(var(--tabbar-h) + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
+  box-shadow: none;
+}
+
+ion-tab-button {
+  --color: var(--paper-3);
+  --color-selected: var(--paper);
+  --ripple-color: transparent;
+  --padding-top: 6px;
+  --padding-bottom: 4px;
+  position: relative;
+  min-width: 0;
+
+  ion-icon {
+    font-size: 22px;
+    margin-bottom: 3px;
+  }
+
+  ion-label {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+  }
+
+  /* Rubric mark over the active section */
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 22px;
+    height: 2px;
+    margin-left: -11px;
+    background: var(--rubric);
+    transform: scaleX(0);
+    transition: transform 200ms var(--ease);
+  }
+
+  &.tab-selected {
+    ion-label {
+      font-weight: 600;
+    }
+
+    &::before {
+      transform: scaleX(1);
+    }
+  }
+}

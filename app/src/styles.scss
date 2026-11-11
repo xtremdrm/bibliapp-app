@@ -1,0 +1,604 @@
+@import "@ionic/angular/css/core.css";
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+@import "@ionic/angular/css/display.css";
+
+/* ==================================================
+   MISAL — ink, paper and rubric
+   One accent (rubric red, as in printed missals),
+   hairline rules instead of cards, book typography.
+================================================== */
+
+:root {
+  /* Ground */
+  --ink: #121212;
+  --ink-2: #1a1a1a;
+  --ink-3: #232323;
+
+  /* Rules */
+  --rule: #2b2b2b;
+  --rule-strong: #474747;
+
+  /* Text (all pass 4.5:1 on --ink) */
+  --paper: #ede6d8;
+  --paper-2: #a89f90;
+  --paper-3: #8a8275;
+
+  /* Accent */
+  --rubric: #c9a24e;
+  --rubric-soft: rgba(201, 162, 78, 0.16);
+
+  /* Type */
+  --font-serif: "Libre Caslon Text", Georgia, serif;
+  /* UI type: Roman inscriptional capitals (titles, labels, buttons, tabs). */
+  --font-sans: "Marcellus", Georgia, serif;
+
+  /* Layout */
+  --gutter: 24px;
+  --tabbar-h: 64px;
+
+  /* Motion */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  /* Legacy aliases (pages not yet migrated keep rendering coherently) */
+  --app-bg: var(--ink);
+  --app-text: var(--paper);
+  --app-muted: var(--paper-2);
+  --app-accent: var(--rubric);
+  --app-accent-soft: var(--rubric-soft);
+  --app-accent-text: var(--paper);
+  --font-display: var(--font-serif);
+  --font-display-cinzel: var(--font-serif);
+  --font-body: var(--font-sans);
+  --app-ease: var(--ease);
+  --app-fast: 140ms;
+  --app-med: 220ms;
+
+  /* Ionic */
+  --ion-background-color: var(--ink);
+  --ion-background-color-rgb: 18, 18, 18;
+  --ion-text-color: var(--paper);
+  --ion-text-color-rgb: 237, 230, 216;
+  --ion-font-family: var(--font-sans);
+  --ion-border-color: var(--rule);
+  --ion-item-background: transparent;
+  --ion-toolbar-background: var(--ink);
+  --ion-toolbar-color: var(--paper);
+  --ion-toolbar-border-color: var(--rule);
+  --ion-tab-bar-background: var(--ink);
+  --ion-tab-bar-border-color: var(--rule);
+  --ion-tab-bar-color: var(--paper-3);
+  --ion-tab-bar-color-selected: var(--paper);
+  --ion-card-background: var(--ink-2);
+  --ion-placeholder-color: var(--paper-3);
+
+  --ion-color-primary: #c9a24e;
+  --ion-color-primary-rgb: 201, 162, 78;
+  --ion-color-primary-contrast: #121212;
+  --ion-color-primary-contrast-rgb: 18, 18, 18;
+  --ion-color-primary-shade: #b08b3f;
+  --ion-color-primary-tint: #d4b26a;
+
+  --ion-color-step-50: #1a1a1a;
+  --ion-color-step-100: #232323;
+  --ion-color-step-150: #2b2b2b;
+  --ion-color-step-200: #393939;
+  --ion-color-step-250: #474747;
+  --ion-color-step-300: #5a5a5a;
+  --ion-color-step-400: #7a7367;
+  --ion-color-step-500: #8a8275;
+  --ion-color-step-600: #a89f90;
+  --ion-color-step-700: #c3bbad;
+  --ion-color-step-800: #d7d0c2;
+  --ion-color-step-900: #ede6d8;
+}
+
+/* ==================================================
+   BASE
+================================================== */
+
+html,
+body,
+ion-app {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+body {
+  overscroll-behavior: none;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-kerning: normal;
+}
+
+h1, h2, h3, h4, p {
+  margin: 0;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+::selection {
+  background: var(--rubric-soft);
+}
+
+:focus-visible {
+  outline: 2px solid var(--rubric);
+  outline-offset: 2px;
+}
+
+/* ==================================================
+   IONIC CHROME — flat, no glass, no glow
+================================================== */
+
+ion-header,
+ion-footer {
+  box-shadow: none !important;
+}
+
+ion-header::after,
+.header-md::after,
+.footer-md::before {
+  display: none !important;
+}
+
+ion-toolbar {
+  --border-width: 0;
+  --min-height: 56px;
+  --padding-start: 8px;
+  --padding-end: 8px;
+}
+
+ion-title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 20px;
+}
+
+ion-back-button {
+  --color: var(--paper);
+  --icon-font-size: 22px;
+}
+
+ion-spinner {
+  color: var(--paper-2);
+}
+
+ion-toast {
+  --background: var(--paper);
+  --color: var(--ink);
+  --border-radius: 2px;
+  --box-shadow: none;
+  font-family: var(--font-sans);
+  font-weight: 500;
+}
+
+ion-action-sheet {
+  --background: var(--ink-2);
+  --button-background: transparent;
+  --button-background-selected: var(--ink-3);
+  --button-color: var(--paper);
+  --color: var(--paper-2);
+
+  .action-sheet-group {
+    border-radius: 0 !important;
+  }
+
+  .action-sheet-title {
+    font-family: var(--font-sans);
+    font-size: 13.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--rubric);
+  }
+}
+
+ion-alert {
+  --background: var(--ink-2);
+
+  .alert-wrapper {
+    border-radius: 2px !important;
+  }
+
+  .alert-title {
+    font-family: var(--font-serif);
+    font-weight: 400 !important;
+    color: var(--paper) !important;
+  }
+
+  .alert-message {
+    color: var(--paper-2) !important;
+  }
+
+  .alert-button {
+    color: var(--paper) !important;
+  }
+}
+
+ion-modal {
+  --background: var(--ink);
+  --border-radius: 0;
+}
+
+ion-searchbar {
+  --background: transparent;
+  --border-radius: 0;
+  --box-shadow: none;
+  --color: var(--paper);
+  --icon-color: var(--paper-2);
+  --placeholder-color: var(--paper-3);
+  --placeholder-opacity: 1;
+  border-bottom: 1px solid var(--rule-strong);
+  padding-inline: 0 !important;
+}
+
+ion-fab-button {
+  --background: var(--paper);
+  --background-activated: var(--paper-2);
+  --color: var(--ink);
+  --border-radius: 2px;
+  --box-shadow: none;
+}
+
+/* Legacy: kept for action sheets created in code */
+ion-action-sheet .action-btn-white {
+  color: var(--paper) !important;
+
+  .action-sheet-button-inner,
+  ion-icon {
+    color: var(--paper) !important;
+  }
+}
+
+/* ==================================================
+   MISAL UTILITIES — shared by every page
+================================================== */
+
+.m-page {
+  padding: calc(26px + env(safe-area-inset-top)) var(--gutter) calc(40px + env(safe-area-inset-bottom));
+}
+
+/* Inside a page that already has an ion-header, the toolbar covers the safe area */
+ion-header + ion-content .m-page {
+  padding-top: 26px;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.m-title {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  color: var(--paper);
+}
+
+.m-heading {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1.12;
+  color: var(--paper);
+}
+
+.m-label {
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--rubric);
+}
+
+.m-label--muted {
+  color: var(--paper-2);
+}
+
+.m-meta {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--paper-2);
+}
+
+.m-italic {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--paper-2);
+}
+
+.m-rule {
+  height: 1px;
+  background: var(--rule);
+  border: 0;
+  margin: 0;
+}
+
+/* Index rows: hairline-separated, no cards */
+.m-list {
+  border-top: 1px solid var(--rule);
+}
+
+.m-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-height: 56px;
+  padding: 14px 0;
+  border: 0;
+  border-bottom: 1px solid var(--rule);
+  background: none;
+  color: var(--paper);
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 140ms var(--ease);
+
+  &:active {
+    opacity: 0.6;
+  }
+}
+
+.m-row-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.m-row-title {
+  font-family: var(--font-serif);
+  font-size: 21px;
+  line-height: 1.2;
+  color: var(--paper);
+}
+
+.m-row-sub {
+  margin-top: 2px;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 16px;
+  line-height: 1.3;
+  color: var(--paper-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.m-chevron {
+  flex-shrink: 0;
+  color: var(--paper-2);
+  font-size: 16px;
+}
+
+/* Dotted leaders, as in a table of contents */
+.m-leader {
+  flex: 1;
+  min-width: 16px;
+  align-self: baseline;
+  border-bottom: 1px dotted var(--rule-strong);
+  transform: translateY(-5px);
+}
+
+/* Text tabs (replace pills) */
+.m-tabs {
+  display: flex;
+  gap: 22px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.m-tab {
+  flex-shrink: 0;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--paper-2);
+  white-space: nowrap;
+  cursor: pointer;
+
+  &.active,
+  &[aria-selected="true"] {
+    color: var(--paper);
+    font-weight: 600;
+    border-bottom-color: var(--rubric);
+  }
+}
+
+/* Buttons */
+.m-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 2px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 140ms var(--ease);
+
+  &:active {
+    opacity: 0.8;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+  }
+}
+
+.m-btn--outline {
+  background: transparent;
+  color: var(--paper);
+  box-shadow: inset 0 0 0 1px var(--rule-strong);
+}
+
+.m-link {
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  color: var(--paper-2);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+
+.m-icon-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--paper-2);
+  cursor: pointer;
+
+  ion-icon {
+    font-size: 20px;
+  }
+
+  &:active {
+    opacity: 0.6;
+  }
+}
+
+/* Inputs: underline only */
+.m-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 46px;
+  border-bottom: 1px solid var(--rule-strong);
+
+  ion-icon {
+    color: var(--paper-2);
+    font-size: 18px;
+  }
+
+  input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    outline: none;
+    background: none;
+    color: var(--paper);
+    font: 17px var(--font-sans);
+
+    &::placeholder {
+      color: var(--paper-3);
+    }
+  }
+}
+
+/* Bottom sheet surface */
+.m-sheet {
+  background: var(--ink-2);
+  border-top: 1px solid var(--rule);
+}
+
+/* Empty / loading states */
+.m-empty {
+  padding: 48px 8px;
+  text-align: center;
+
+  .m-empty-title {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    color: var(--paper);
+  }
+
+  .m-empty-sub {
+    margin-top: 6px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--paper-2);
+  }
+}
+
+.m-loading {
+  display: grid;
+  place-items: center;
+  padding: 64px 0;
+}
+
+/* Source credit (CEE, art) */
+.m-credit {
+  margin-top: 32px;
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--paper-3);
+  text-align: center;
+}
+
+/* ==================================================
+   ANDROID WEBVIEW FIX
+================================================== */
+
+/* ion-router-outlet should never intercept touches */
+ion-router-outlet {
+  pointer-events: none;
+}
+
+ion-router-outlet ~ ion-page,
+.ion-page {
+  pointer-events: auto !important;
+}
+
+/* ==================================================
+   MOTION
+================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

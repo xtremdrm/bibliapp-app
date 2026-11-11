@@ -1,0 +1,29 @@
+// Prayer text: layout only; colours and type come from tokens.
+
+.m-title {
+  margin-top: 4px;
+}
+
+.text {
+  margin-top: 24px;
+  font-family: var(--font-serif);
+  font-size: 20px;
+  line-height: 1.6;
+  color: var(--paper);
+  white-space: pre-line;
+
+  p + p {
+    margin-top: 0.8em;
+  }
+
+  p.gap {
+    height: 0.4em;
+  }
+}
+
+.dialogue .role {
+  margin-right: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--rubric);
+}

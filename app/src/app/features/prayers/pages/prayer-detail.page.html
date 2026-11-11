@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/prayers" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ prayer()?.title ?? 'Oración' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <article class="m-page" *ngIf="prayer() as p">
+
+    <p class="m-label" *ngIf="categoryTitle()">{{ categoryTitle() }}</p>
+    <h1 class="m-title">{{ p.title }}</h1>
+
+    <div class="text" *ngIf="p.body && p.body.length">
+      <p *ngFor="let l of p.body" [class.gap]="!l.trim()">{{ l }}</p>
+    </div>
+
+    <div class="text dialogue" *ngIf="p.lines && p.lines.length">
+      <p *ngFor="let l of p.lines">
+        <span class="role">{{ l.role }}</span>{{ l.text }}
+      </p>
+    </div>
+
+  </article>
+</ion-content>

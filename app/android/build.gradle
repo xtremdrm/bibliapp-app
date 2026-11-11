@@ -1,0 +1,80 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+  repositories {
+    google()
+    mavenCentral()
+  }
+  dependencies {
+    classpath 'com.android.tools.build:gradle:8.8.0'
+    classpath 'com.google.gms:google-services:4.4.4'
+    classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.0'
+
+    // NOTE: Do not place your application dependencies here; they belong
+    // in the individual module build.gradle files
+  }
+}
+
+apply from: "variables.gradle"
+
+allprojects {
+  repositories {
+    google()
+    mavenCentral()
+  }
+}
+
+// Fuerza versiones de libs
+subprojects {
+  configurations.configureEach {
+    resolutionStrategy {
+      force "androidx.activity:activity:1.10.1"
+      force "androidx.core:core:1.16.0"
+      force "androidx.core:core-ktx:1.16.0"
+    }
+  }
+}
+
+// Fuerza Java 17 en todos los módulos
+subprojects { project ->
+  afterEvaluate {
+    project.tasks.withType(JavaCompile).configureEach { t ->
+      t.sourceCompatibility = JavaVersion.VERSION_17.toString()
+      t.targetCompatibility = JavaVersion.VERSION_17.toString()
+
+      if (t.options.hasProperty("release")) {
+        t.options.release = null
+      }
+    }
+
+    project.plugins.withId("com.android.application") {
+      project.android.compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+      }
+    }
+
+    project.plugins.withId("com.android.library") {
+      project.android.compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+      }
+    }
+  }
+}
+
+// Fuerza Kotlin a JVM 17 sin importar la clase KotlinCompile
+subprojects { project ->
+  afterEvaluate {
+    project.tasks.configureEach { task ->
+      if (task.hasProperty("kotlinOptions")) {
+        task.kotlinOptions {
+          jvmTarget = "17"
+        }
+      }
+    }
+  }
+}
+
+task clean(type: Delete) {
+  delete rootProject.buildDir
+}

@@ -1,0 +1,102 @@
+<ion-content>
+  <div class="m-page">
+
+    <!-- Calendar sheet -->
+    <header class="sheet">
+      <div class="day" aria-hidden="true">{{ dayNumber }}</div>
+      <div class="sheet-text">
+        <h1 class="weekday">
+          <span class="visually-hidden">{{ dayNumber }} de </span>{{ weekday }}
+        </h1>
+        <p class="season">{{ seasonLine }}</p>
+        @if (liturgicalDay.saint) {
+          <p class="saint">{{ liturgicalDay.saint }}</p>
+        }
+      </div>
+      <a class="m-icon-btn cal" routerLink="/tabs/calendar" aria-label="Calendario litúrgico">
+        <ion-icon name="m-calendar" aria-hidden="true"></ion-icon>
+      </a>
+    </header>
+
+    <!-- Verse of the day -->
+    <section class="verse" aria-labelledby="verse-label">
+      <img class="verse-bg" [src]="versePhotoSrc" alt="" decoding="async"
+           (error)="$any($event.target).hidden = true">
+      <span class="verse-scrim" aria-hidden="true"></span>
+
+      <h2 class="m-label" id="verse-label">Versículo del día</h2>
+
+      @if (verseText) {
+        <p class="verse-text">{{ verseText }}</p>
+        <p class="verse-ref">{{ verseRef }}</p>
+
+        <div class="actions">
+          <button type="button" class="m-icon-btn" aria-label="Compartir" (click)="shareVerse()">
+            <ion-icon name="m-share" aria-hidden="true"></ion-icon>
+          </button>
+          <button type="button" class="m-icon-btn" aria-label="Copiar" (click)="copyVerse()">
+            <ion-icon name="m-copy" aria-hidden="true"></ion-icon>
+          </button>
+          <button type="button" class="m-icon-btn" aria-label="Crear imagen" (click)="openEditor()">
+            <ion-icon name="m-image" aria-hidden="true"></ion-icon>
+          </button>
+          <button type="button" class="m-link read" (click)="goToVerse()">Leer el capítulo</button>
+        </div>
+      } @else {
+        <div class="m-loading"><ion-spinner name="crescent"></ion-spinner></div>
+      }
+    </section>
+
+    <!-- Index -->
+    <nav class="m-list index" aria-label="Accesos">
+      @if (lastRead(); as lr) {
+        <button type="button" class="m-row" (click)="openLastRead()">
+          <div class="m-row-body">
+            <div class="m-row-title">{{ lr.bookName }} {{ lr.chapter }}</div>
+            <div class="m-row-sub">Última lectura</div>
+          </div>
+          <ion-icon class="m-chevron" name="m-forward" aria-hidden="true"></ion-icon>
+        </button>
+      }
+
+      <a class="m-row" routerLink="/tabs/prayers/rosary">
+        <div class="m-row-body">
+          <div class="m-row-title">Santo Rosario</div>
+          <div class="m-row-sub">{{ rosaryMysteries }}</div>
+        </div>
+        <ion-icon class="m-chevron" name="m-forward" aria-hidden="true"></ion-icon>
+      </a>
+
+      @if (suggestedPrayer(); as p) {
+        <button type="button" class="m-row" (click)="openPrayer(p.id)">
+          <div class="m-row-body">
+            <div class="m-row-title">{{ p.title }}</div>
+            <div class="m-row-sub">{{ prayerMoment }}</div>
+          </div>
+          <ion-icon class="m-chevron" name="m-forward" aria-hidden="true"></ion-icon>
+        </button>
+      }
+
+      @if (weekChallenge(); as ch) {
+        <button type="button" class="m-row" (click)="openChallenge()">
+          <div class="m-row-body">
+            <div class="m-row-title">{{ ch.bookName }} {{ ch.chapter }}</div>
+            <div class="m-row-sub">Lectura de la semana · {{ ch.label }}</div>
+          </div>
+          <span class="m-meta week" [attr.aria-label]="weekDaysRead() + ' de 7 días'">{{ weekDaysRead() }}/7</span>
+          <ion-icon class="m-chevron" name="m-forward" aria-hidden="true"></ion-icon>
+        </button>
+      }
+    </nav>
+
+    <a class="m-credit" routerLink="/legal">Sagrada Biblia · Conferencia Episcopal Española</a>
+  </div>
+
+  <ion-toast
+    [isOpen]="toastOpen()"
+    [message]="toastMessage()"
+    [duration]="1600"
+    position="bottom"
+    (didDismiss)="toastOpen.set(false)"
+  ></ion-toast>
+</ion-content>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/widget_background_pinned"
+    android:paddingLeft="18dp"
+    android:paddingRight="18dp"
+    android:paddingTop="14dp"
+    android:paddingBottom="14dp"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/widget_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MI VERSÍCULO"
+        android:textColor="#7C5CFF"
+        android:textSize="9sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:id="@+id/widget_verse_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        android:maxLines="4"
+        android:ellipsize="end" />
+
+    <TextView
+        android:id="@+id/widget_verse_ref"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="#9C7CFF"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp" />
+
+</LinearLayout>

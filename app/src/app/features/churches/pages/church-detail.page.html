@@ -1,0 +1,111 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/churches" text=""></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ng-container *ngIf="church() as church">
+
+    <img
+      *ngIf="church.imageUrl"
+      class="hero-photo"
+      [src]="church.imageUrl"
+      alt=""
+    />
+
+    <div class="m-page">
+
+      <header class="head">
+        <p class="m-label">{{ church.diocese || church.city }}</p>
+        <h1 class="m-title">{{ church.name }}</h1>
+        <p class="m-italic address">
+          {{ church.address || 'Sin dirección' }}<span *ngIf="church.city && church.diocese">, {{ church.city }}</span>
+        </p>
+        <p class="m-meta" *ngIf="church.distanceKm">{{ formatDistance(church.distanceKm) }}</p>
+      </header>
+
+      <nav class="actions" aria-label="Acciones">
+        <button type="button" class="action" *ngIf="church.website" (click)="openWebsite()">
+          <ion-icon name="m-globe" aria-hidden="true"></ion-icon>
+          <span>Web</span>
+        </button>
+
+        <button
+          type="button"
+          class="action"
+          [class.is-on]="church.isFavorite"
+          [attr.aria-pressed]="!!church.isFavorite"
+          (click)="toggleFavorite()"
+        >
+          <ion-icon [name]="church.isFavorite ? 'm-star-fill' : 'm-star'" aria-hidden="true"></ion-icon>
+          <span>Favorita</span>
+        </button>
+
+        <button
+          type="button"
+          class="action"
+          [class.is-on]="church.isMyParish"
+          [attr.aria-pressed]="!!church.isMyParish"
+          (click)="setMyParish()"
+        >
+          <ion-icon name="m-church" aria-hidden="true"></ion-icon>
+          <span>Mi parroquia</span>
+        </button>
+
+        <button
+          type="button"
+          class="action"
+          *ngIf="church.source === 'directory' && !canEdit()"
+          (click)="saveChurch()"
+        >
+          <ion-icon name="m-bookmark" aria-hidden="true"></ion-icon>
+          <span>Guardar</span>
+        </button>
+
+        <button type="button" class="action" *ngIf="canEdit()" (click)="editChurch()">
+          <ion-icon name="m-edit" aria-hidden="true"></ion-icon>
+          <span>Editar</span>
+        </button>
+      </nav>
+
+      <section class="section">
+        <h2 class="m-label section-label">Horarios</h2>
+
+        <p class="m-meta" *ngIf="!church.schedules.length">Sin horarios</p>
+
+        <div class="m-list" *ngIf="church.schedules.length">
+          <div class="schedule-row" *ngFor="let group of scheduleDays()">
+            <span class="day">{{ formatDay(group.day) }}</span>
+            <div class="times">
+              <span class="m-meta" *ngFor="let schedule of group.items">
+                {{ schedule.time }} · {{ schedule.label || formatScheduleType(schedule) }}<span *ngIf="schedule.notes"> · {{ schedule.notes }}</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" *ngIf="church.description">
+        <p class="prose">{{ church.description }}</p>
+      </section>
+
+      <section class="section" *ngIf="church.notes">
+        <h2 class="m-label section-label">Notas</h2>
+        <p class="prose">{{ church.notes }}</p>
+      </section>
+
+      <button
+        *ngIf="church.source === 'manual'"
+        type="button"
+        class="m-link delete"
+        (click)="deleteChurch()"
+      >
+        Eliminar iglesia
+      </button>
+
+    </div>
+  </ng-container>
+</ion-content>

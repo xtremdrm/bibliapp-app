@@ -1,0 +1,228 @@
+// Lectura: book typesetting, multi-verse selection, chapter dock.
+
+.type-btn {
+  font-family: var(--font-serif);
+  font-size: 19px;
+  color: var(--paper-2);
+}
+
+.type-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  padding: 4px calc(var(--gutter) - 10px) 4px var(--gutter);
+  border-bottom: 1px solid var(--rule);
+
+  .m-meta {
+    margin-right: auto;
+  }
+}
+
+.type-value {
+  min-width: 2ch;
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: 17px;
+  color: var(--paper);
+  font-variant-numeric: tabular-nums;
+}
+
+.reader {
+  padding: 28px var(--gutter) 120px;
+
+  &.with-sheet {
+    padding-bottom: 200px;
+  }
+}
+
+.opening {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.book {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--paper-2);
+}
+
+.numeral {
+  margin: 2px 0 0;
+  font-family: var(--font-serif);
+  font-size: 72px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--rubric);
+}
+
+.text {
+  margin: 0;
+  font-family: var(--font-serif);
+  line-height: 1.62;
+  color: var(--paper);
+  text-align: justify;
+  hyphens: auto;
+  text-wrap: pretty;
+}
+
+.v {
+  cursor: pointer;
+  border-radius: 1px;
+  transition: background-color 160ms var(--ease);
+  -webkit-tap-highlight-color: transparent;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  outline: none;
+
+  &:focus-visible {
+    outline: 1px solid var(--rubric);
+  }
+
+  &.sel {
+    background: var(--rubric-soft);
+    text-decoration: underline;
+    text-decoration-color: var(--rubric);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 5px;
+  }
+
+  &.hl {
+    background: var(--rubric-soft);
+  }
+
+  &.bm .vno {
+    color: var(--paper);
+    text-decoration: underline;
+    text-decoration-color: var(--rubric);
+    text-underline-offset: 2px;
+  }
+}
+
+.vno {
+  margin: 0 3px 0 2px;
+  font-family: var(--font-sans);
+  font-size: 0.62em;
+  font-weight: 600;
+  color: var(--rubric);
+  vertical-align: 0.6em;
+  line-height: 0;
+  user-select: none;
+}
+
+.credit {
+  display: block;
+  width: 100%;
+  margin-top: 40px;
+  min-height: 44px;
+  border: 0;
+  background: none;
+}
+
+// Selection sheet
+.sel-sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 12px var(--gutter) 10px;
+}
+
+.sel-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .m-icon-btn {
+    margin-right: -10px;
+  }
+}
+
+.sel-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.sel-ref {
+  font-family: var(--font-serif);
+  font-size: 21px;
+  color: var(--paper);
+}
+
+.sel-actions {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 8px;
+  border-top: 1px solid var(--rule);
+  padding-top: 6px;
+}
+
+.act {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-height: 56px;
+  padding: 6px 0;
+  border: 0;
+  background: none;
+  color: var(--paper-2);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  cursor: pointer;
+
+  ion-icon {
+    font-size: 22px;
+    color: var(--paper);
+  }
+
+  &.on ion-icon {
+    color: var(--rubric);
+  }
+
+  &:active {
+    opacity: 0.6;
+  }
+}
+
+// Chapter dock
+.dock {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  padding: 2px calc(var(--gutter) - 10px);
+  background: var(--ink);
+  border-top: 1px solid var(--rule);
+  transition: transform 200ms var(--ease), opacity 200ms var(--ease);
+
+  &.hidden {
+    transform: translateY(100%);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .m-icon-btn:disabled {
+    opacity: 0.3;
+  }
+}
+
+.dock-center {
+  flex: 1;
+  min-height: 44px;
+  border: 0;
+  background: none;
+  font-family: var(--font-serif);
+  font-size: 18px;
+  color: var(--paper);
+  cursor: pointer;
+
+  .m-meta {
+    font-size: 13px;
+  }
+}

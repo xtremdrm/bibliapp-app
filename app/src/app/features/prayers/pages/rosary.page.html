@@ -1,0 +1,81 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/prayers" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Santo Rosario</ion-title>
+    <ion-buttons slot="end">
+      <button type="button" class="m-icon-btn" aria-label="Reiniciar" (click)="reset()">
+        <ion-icon name="m-refresh" aria-hidden="true"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content
+  (touchstart)="onTouchStart($event)"
+  (touchend)="onTouchEnd($event)">
+
+  <!-- Painting -->
+  <figure class="plate">
+    <img [src]="artUrl" alt="" [style.object-position]="art?.focus" />
+  </figure>
+  <p class="m-meta credit">Bartolomé Esteban Murillo, c. 1670</p>
+
+  <div class="m-page body">
+
+    <!-- Mystery set -->
+    <div class="m-tabs" role="tablist" aria-label="Misterios">
+      <button type="button" role="tab" class="m-tab" [attr.aria-selected]="mysteryType() === 'gozosos'"   (click)="setMystery('gozosos')">Gozosos</button>
+      <button type="button" role="tab" class="m-tab" [attr.aria-selected]="mysteryType() === 'luminosos'" (click)="setMystery('luminosos')">Luminosos</button>
+      <button type="button" role="tab" class="m-tab" [attr.aria-selected]="mysteryType() === 'dolorosos'" (click)="setMystery('dolorosos')">Dolorosos</button>
+      <button type="button" role="tab" class="m-tab" [attr.aria-selected]="mysteryType() === 'gloriosos'" (click)="setMystery('gloriosos')">Gloriosos</button>
+    </div>
+
+    <!-- Bead track -->
+    <div class="beads-track" #beadsTrack aria-hidden="true">
+      <div
+        class="bead-item"
+        *ngFor="let b of beads(); let i = index"
+        [ngClass]="beadClass(b, i)"
+        [attr.data-type]="b.type"
+      >
+        <app-cross-icon *ngIf="b.type === 'cross'; else dot" class="bead-cross" [size]="18"></app-cross-icon>
+        <ng-template #dot><span class="bead-dot"></span></ng-template>
+      </div>
+    </div>
+
+    <p class="m-meta count">Cuenta {{ current() + 1 }} de {{ totalBeads() }}</p>
+
+    <!-- Current bead -->
+    <div
+      class="stage"
+      *ngIf="currentBead() as b"
+      [class.slide-left]="slideDir() === 1"
+      [class.slide-right]="slideDir() === -1"
+    >
+      <p class="m-label">{{ b.label }}</p>
+      <h2 class="m-heading" *ngIf="b.mystery">{{ b.mystery }}</h2>
+      <p class="m-meta set" *ngIf="b.mystery">{{ MYSTERY_LABELS[mysteryType()] }}</p>
+      <div class="prayer">{{ b.prayer }}</div>
+
+      <div class="finished" *ngIf="isFinished()">
+        <app-cross-icon class="finished-cross" [size]="36"></app-cross-icon>
+        <p class="finished-title">Rosario terminado</p>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav">
+      <button type="button" class="m-btn m-btn--outline" [disabled]="current() === 0" (click)="prev()">
+        <ion-icon name="m-back" aria-hidden="true"></ion-icon>
+        Anterior
+      </button>
+      <button type="button" class="m-btn" [disabled]="isFinished()" (click)="next()">
+        Siguiente
+        <ion-icon name="m-forward" aria-hidden="true"></ion-icon>
+      </button>
+    </div>
+
+  </div>
+</ion-content>

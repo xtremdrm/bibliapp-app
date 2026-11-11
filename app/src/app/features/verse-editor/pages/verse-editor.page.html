@@ -1,0 +1,191 @@
+<ion-content [scrollY]="false">
+  <div class="editor">
+
+    <header class="bar">
+      <button type="button" class="m-icon-btn" aria-label="Cerrar" (click)="close()">
+        <ion-icon name="m-close" aria-hidden="true"></ion-icon>
+      </button>
+      <h1 class="bar-title">Imagen</h1>
+      <button type="button" class="m-icon-btn" aria-label="Guardar imagen" [disabled]="!!busy()" (click)="save()">
+        @if (busy() === 'save') { <ion-spinner name="crescent"></ion-spinner> }
+        @else { <ion-icon name="m-download" aria-hidden="true"></ion-icon> }
+      </button>
+      <button type="button" class="m-btn share" [disabled]="!!busy()" (click)="share()">
+        @if (busy() === 'share') { <ion-spinner name="crescent"></ion-spinner> } @else { Compartir }
+      </button>
+    </header>
+
+    <div class="stage">
+      <canvas #preview class="preview" role="img" [attr.aria-label]="ref() || 'Vista previa'"></canvas>
+    </div>
+
+    <nav class="m-tabs tabs" role="tablist" aria-label="Opciones">
+      @for (t of tabs; track t.id) {
+        <button type="button" role="tab" class="m-tab" [attr.aria-selected]="tab() === t.id" (click)="tab.set(t.id)">{{ t.label }}</button>
+      }
+    </nav>
+
+    <section class="panel" role="tabpanel">
+      @switch (tab()) {
+
+        @case ('estilo') {
+          <div class="layouts">
+            @for (l of layouts; track l.id) {
+              <button type="button" class="layout" [class.on]="style().layout === l.id" [attr.aria-pressed]="style().layout === l.id" (click)="setLayout(l.id)">
+                <span class="layout-thumb">
+                  @if (layoutThumbs()[l.id]; as src) { <img [src]="src" alt="" /> }
+                </span>
+                <span class="layout-name">{{ l.label }}</span>
+              </button>
+            }
+          </div>
+        }
+
+        @case ('fondo') {
+          <h2 class="m-label">Fotos</h2>
+          <div class="arts">
+            @for (p of photos; track p.id) {
+              <button type="button" class="art" [class.on]="isPhoto(p.id)" [attr.aria-pressed]="isPhoto(p.id)" [attr.aria-label]="'Foto ' + ($index + 1)" (click)="setPhoto(p.id)">
+                <img [src]="photoSrc(p.id)" alt="" loading="lazy" />
+              </button>
+            }
+          </div>
+
+          <h2 class="m-label">Obras</h2>
+          <div class="arts">
+            @for (a of artworks; track a.id) {
+              <button type="button" class="art" [class.on]="isArt(a.id)" [attr.aria-pressed]="isArt(a.id)" [attr.aria-label]="a.title + ', ' + a.artist" (click)="setArt(a.id)">
+                <img [src]="artSrc(a.id)" alt="" loading="lazy" [style.object-position]="a.focus" />
+              </button>
+            }
+          </div>
+          @if (currentArt(); as art) {
+            <p class="art-credit">{{ art.title }} · {{ art.artist }}, {{ art.date }}</p>
+          }
+
+          <h2 class="m-label">Colores</h2>
+          <div class="swatches">
+            @for (c of solids; track c.color) {
+              <button type="button" class="swatch" [class.on]="isSolid(c.color)" [style.background]="c.color" [attr.aria-label]="c.label" [attr.aria-pressed]="isSolid(c.color)" (click)="setSolid(c.color)"></button>
+            }
+          </div>
+
+          @if (hasImage() && style().layout !== 'lamina') {
+            <label class="range">
+              <span class="range-label">Velo</span>
+              <input type="range" min="0" max="90" step="5" [value]="style().overlay" (input)="onRange('overlay', $event)" />
+              <span class="range-value">{{ style().overlay }}%</span>
+            </label>
+          }
+          @if (currentArt()) {
+            <div class="opt">
+              <span>Autor de la obra</span>
+              <ion-toggle [checked]="style().showCredit" (ionChange)="onToggle('showCredit', $event)" aria-label="Autor de la obra"></ion-toggle>
+            </div>
+          }
+        }
+
+        @case ('letra') {
+          @for (g of fontGroups; track g.group) {
+            <h2 class="m-label">{{ g.group }}</h2>
+            <div class="fonts">
+              @for (f of g.fonts; track f.id) {
+                <button type="button" class="font" [class.on]="style().fontId === f.id" [attr.aria-pressed]="style().fontId === f.id" (click)="patch({ fontId: f.id })">
+                  <span class="font-sample" [style.font-family]="'&quot;' + f.family + '&quot;'" [style.font-weight]="f.weight">Aa</span>
+                  <span class="font-name">{{ f.label }}</span>
+                </button>
+              }
+            </div>
+          }
+        }
+
+        @case ('texto') {
+          <label class="range">
+            <span class="range-label">Tamaño</span>
+            <input type="range" min="0.7" max="1.4" step="0.05" [value]="style().scale" (input)="onRange('scale', $event)" />
+            <span class="range-value">{{ (style().scale * 100).toFixed(0) }}%</span>
+          </label>
+          <label class="range">
+            <span class="range-label">Interlineado</span>
+            <input type="range" min="1" max="1.8" step="0.02" [value]="style().lineHeight" (input)="onRange('lineHeight', $event)" />
+            <span class="range-value">{{ style().lineHeight.toFixed(2) }}</span>
+          </label>
+
+          <div class="row-group">
+            <span class="row-label">Alineación</span>
+            <div class="m-tabs seg">
+              <button type="button" class="m-tab" [attr.aria-selected]="style().align === 'left'" (click)="patch({ align: 'left' })">Izquierda</button>
+              <button type="button" class="m-tab" [attr.aria-selected]="style().align === 'center'" (click)="patch({ align: 'center' })">Centro</button>
+            </div>
+          </div>
+          <div class="row-group">
+            <span class="row-label">Comillas</span>
+            <div class="m-tabs seg">
+              <button type="button" class="m-tab" [attr.aria-selected]="style().quotes === 'none'" (click)="setQuotes('none')">Sin</button>
+              <button type="button" class="m-tab" [attr.aria-selected]="style().quotes === 'curly'" (click)="setQuotes('curly')">“ ”</button>
+              <button type="button" class="m-tab" [attr.aria-selected]="style().quotes === 'angle'" (click)="setQuotes('angle')">« »</button>
+            </div>
+          </div>
+
+          <h2 class="m-label">Color del texto</h2>
+          <div class="swatches">
+            @for (c of textColors; track c.color) {
+              <button type="button" class="swatch" [class.on]="style().textColor === c.color" [style.background]="c.color" [attr.aria-label]="c.label" [attr.aria-pressed]="style().textColor === c.color" (click)="patch({ textColor: c.color })"></button>
+            }
+          </div>
+          <h2 class="m-label">Color de acento</h2>
+          <div class="swatches">
+            @for (c of accentColors; track c.color) {
+              <button type="button" class="swatch" [class.on]="style().accentColor === c.color" [style.background]="c.color" [attr.aria-label]="c.label" [attr.aria-pressed]="style().accentColor === c.color" (click)="patch({ accentColor: c.color })"></button>
+            }
+          </div>
+
+          <div class="opts">
+            <div class="opt">
+              <span>Mayúsculas</span>
+              <ion-toggle [checked]="style().caps" (ionChange)="onToggle('caps', $event)" aria-label="Mayúsculas"></ion-toggle>
+            </div>
+            <div class="opt">
+              <span>Cursiva</span>
+              <ion-toggle [checked]="style().italic" (ionChange)="onToggle('italic', $event)" aria-label="Cursiva"></ion-toggle>
+            </div>
+            <div class="opt">
+              <span>Cita</span>
+              <ion-toggle [checked]="style().showRef" (ionChange)="onToggle('showRef', $event)" aria-label="Cita"></ion-toggle>
+            </div>
+            <div class="opt">
+              <span>Firma BibliApp</span>
+              <ion-toggle [checked]="style().showMark" (ionChange)="onToggle('showMark', $event)" aria-label="Firma BibliApp"></ion-toggle>
+            </div>
+          </div>
+
+          <h2 class="m-label">Texto</h2>
+          <textarea class="field" rows="4" [value]="text()" (input)="onText($event)" aria-label="Texto"></textarea>
+          <input class="field" type="text" [value]="ref()" (input)="onRef($event)" aria-label="Cita" />
+
+          <button type="button" class="m-link reset" (click)="reset()">Restablecer estilo</button>
+        }
+
+        @case ('formato') {
+          <div class="formats">
+            @for (f of formats; track f.id) {
+              <button type="button" class="format" [class.on]="style().format === f.id" [attr.aria-pressed]="style().format === f.id" (click)="patch({ format: f.id })">
+                <span class="format-box" [style.aspect-ratio]="f.w + ' / ' + f.h"></span>
+                <span class="format-name">{{ f.label }}</span>
+                <span class="m-meta">{{ f.ratio }}</span>
+              </button>
+            }
+          </div>
+        }
+      }
+    </section>
+  </div>
+
+  <ion-toast
+    [isOpen]="toastOpen()"
+    [message]="toastMessage()"
+    [duration]="1800"
+    position="top"
+    (didDismiss)="toastOpen.set(false)"
+  ></ion-toast>
+</ion-content>

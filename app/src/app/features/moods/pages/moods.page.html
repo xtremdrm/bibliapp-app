@@ -1,0 +1,39 @@
+<ion-content>
+  <div class="m-page">
+    <h1 class="m-title moods-title">Ánimo</h1>
+
+    @if (loading()) {
+      <div class="m-loading"><ion-spinner name="crescent"></ion-spinner></div>
+    } @else if (error()) {
+      <div class="m-empty">
+        <div class="m-empty-title">{{ error() }}</div>
+        <button type="button" class="m-link" (click)="loadData()">Reintentar</button>
+      </div>
+    } @else if (cards().length) {
+      <div class="mosaic">
+        <div class="mosaic-col">
+          @for (c of leftCards; track c.id; let i = $index) {
+            <ng-container *ngTemplateOutlet="tile; context: { $implicit: c, tall: isTileTall(i * 2) }"></ng-container>
+          }
+        </div>
+        <div class="mosaic-col">
+          @for (c of rightCards; track c.id; let i = $index) {
+            <ng-container *ngTemplateOutlet="tile; context: { $implicit: c, tall: isTileTall(i * 2 + 1) }"></ng-container>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</ion-content>
+
+<ng-template #tile let-c let-tall="tall">
+  <button type="button" class="tile" [class.tile--tall]="tall" (click)="openMood(c.id)">
+    @if (tileImage(c); as src) {
+      <img class="tile-img" [src]="src" [style.object-position]="tileFocus(c)" alt="" loading="lazy" decoding="async">
+    }
+    <span class="tile-scrim" aria-hidden="true"></span>
+    <span class="tile-body">
+      <span class="tile-title">{{ c.title }}</span>
+    </span>
+  </button>
+</ng-template>

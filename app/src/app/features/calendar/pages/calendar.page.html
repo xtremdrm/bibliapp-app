@@ -1,0 +1,109 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/home" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Calendario litúrgico</ion-title>
+    @if (canNotify) {
+      <ion-buttons slot="end">
+        <button type="button" class="m-icon-btn" [class.notif-on]="notifEnabled" (click)="toggleNotif()"
+                [attr.aria-label]="notifEnabled ? 'Desactivar recordatorios' : 'Activar recordatorios'"
+                [attr.aria-pressed]="notifEnabled">
+          <ion-icon [name]="notifEnabled ? 'notifications-outline' : 'notifications-off-outline'" aria-hidden="true"></ion-icon>
+        </button>
+      </ion-buttons>
+    }
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="m-page">
+    <div class="m-label">{{ seasonInfo.label }}</div>
+
+    <div class="month-nav">
+      <h1 class="m-title month-title">{{ monthLabel }}</h1>
+      <div class="month-arrows">
+        <button type="button" class="m-icon-btn" aria-label="Mes anterior" (click)="prev()">
+          <ion-icon name="m-back" aria-hidden="true"></ion-icon>
+        </button>
+        <button type="button" class="m-icon-btn" aria-label="Mes siguiente" (click)="next()">
+          <ion-icon name="m-forward" aria-hidden="true"></ion-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="cal-grid">
+      @for (h of headers; track h) {
+        <div class="day-hdr" aria-hidden="true">{{ h }}</div>
+      }
+      @for (c of cells; track $index) {
+        @if (c.date) {
+          <button type="button" class="day-cell"
+                  [class.today]="c.isToday"
+                  [class.marked]="c.isSunday || c.isPrecepto"
+                  [class.selected]="isSelected(c)"
+                  [attr.aria-pressed]="isSelected(c)"
+                  [attr.aria-label]="dayAria(c)"
+                  (click)="onDayClick(c)">
+            <span class="day-num">{{ c.dayNum }}</span>
+            @if (c.feastLabel) {
+              <span class="swatch" [style.background]="c.colorHex" aria-hidden="true"></span>
+            }
+          </button>
+        } @else {
+          <span class="day-cell day-cell--empty" aria-hidden="true"></span>
+        }
+      }
+    </div>
+
+    <p class="legend m-meta">
+      <span class="legend-item"><span class="swatch" [style.background]="seasonInfo.hex" aria-hidden="true"></span>Color litúrgico de la fiesta</span>
+      <span class="legend-item"><span class="legend-num" aria-hidden="true">8</span>Domingo o día de precepto</span>
+    </p>
+
+    @if (selectedCell && selectedCell.date && selectedDay; as day) {
+      <section class="detail" aria-live="polite">
+        <div class="m-label">{{ day.seasonLabel }}</div>
+        <h2 class="m-heading detail-title">{{ selectedCell.feastLabel || dateOf(selectedCell) }}</h2>
+        @if (selectedCell.feastLabel) {
+          <p class="m-italic detail-date">{{ dateOf(selectedCell) }}</p>
+        }
+        @if (day.saint) {
+          <p class="detail-saint">{{ day.saint }}</p>
+        }
+        <p class="m-meta detail-meta">
+          <span class="swatch" [style.background]="day.colorHex" aria-hidden="true"></span>
+          <span>{{ day.colorLabel }}@if (selectedCell.isSunday || selectedCell.isPrecepto) { · Día de precepto}</span>
+        </p>
+      </section>
+    }
+
+    @if (feasts.length) {
+      <h2 class="m-label section-label">Celebraciones de {{ monthName }}</h2>
+      <div class="m-list">
+        @for (f of feasts; track f.dayNum) {
+          <div class="feast-row">
+            <div class="feast-date">
+              <span class="feast-day">{{ f.dayNum }}</span>
+              <span class="feast-wd">{{ f.weekday.slice(0, 3) }}</span>
+            </div>
+            <div class="feast-body">
+              <div class="feast-name">{{ f.label }}</div>
+              @if (f.isPrecepto) {
+                <div class="m-label feast-rank">Precepto</div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</ion-content>
+
+<ion-toast
+  [isOpen]="toastOpen"
+  [message]="toastMsg"
+  duration="2500"
+  position="bottom"
+  (didDismiss)="toastOpen = false">
+</ion-toast>

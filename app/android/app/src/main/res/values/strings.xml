@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">BibliApp</string>
+    <string name="title_activity_main">BibliApp</string>
+    <string name="package_name">com.rubio.bibliapp</string>
+    <string name="custom_url_scheme">com.rubio.bibliapp</string>
+</resources>

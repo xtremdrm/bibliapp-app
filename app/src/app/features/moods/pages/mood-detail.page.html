@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/moods" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ mood()?.title || 'Ánimo' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (loading()) {
+    <div class="m-loading"><ion-spinner name="crescent"></ion-spinner></div>
+  } @else if (error()) {
+    <div class="m-page">
+      <div class="m-empty">
+        <div class="m-empty-title">{{ error() }}</div>
+      </div>
+    </div>
+  } @else if (mood(); as currentMood) {
+    @if (plateSrc; as src) {
+      <figure class="plate">
+        <img class="plate-img" [src]="src" [style.object-position]="plateFocus" alt="">
+      </figure>
+    }
+
+    <div class="m-page">
+      <header class="intro">
+        <h1 class="m-title intro-title">{{ currentMood.title }}</h1>
+        @if (currentMood.quote) {
+          <blockquote class="intro-quote">
+            <p class="m-italic intro-sub">{{ currentMood.quote }}</p>
+          </blockquote>
+        }
+      </header>
+
+      @if (verses().length > 0) {
+        <ol class="verses">
+          @for (verse of verses(); track verse.ref + $index) {
+            <li class="verse">
+              <p class="verse-text">{{ verse.text }}</p>
+              <div class="verse-foot">
+                <button type="button" class="verse-ref m-label" (click)="goToVerse(verse)"
+                        [attr.aria-label]="'Leer ' + verse.ref">
+                  {{ verse.ref }}
+                </button>
+                <div class="verse-actions">
+                  <button type="button" class="m-icon-btn" aria-label="Compartir" (click)="shareVerse(verse, $event)">
+                    <ion-icon name="m-share" aria-hidden="true"></ion-icon>
+                  </button>
+                  <button type="button" class="m-icon-btn" aria-label="Crear imagen" (click)="openEditor(verse, $event)">
+                    <ion-icon name="m-image" aria-hidden="true"></ion-icon>
+                  </button>
+                  <button type="button" class="m-icon-btn" aria-label="Leer en la Biblia" (click)="goToVerse(verse)">
+                    <ion-icon name="m-read" aria-hidden="true"></ion-icon>
+                  </button>
+                </div>
+              </div>
+            </li>
+          }
+        </ol>
+      } @else {
+        <div class="m-empty">
+          <div class="m-empty-title">Sin versículos por ahora</div>
+        </div>
+      }
+    </div>
+  }
+</ion-content>
+
+<ion-toast
+  [isOpen]="toastOpen"
+  [message]="toastMessage"
+  [duration]="2200"
+  (didDismiss)="toastOpen = false"
+  position="bottom">
+</ion-toast>

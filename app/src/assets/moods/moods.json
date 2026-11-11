@@ -1,0 +1,137 @@
+[
+  {
+    "id": "ansiedad",
+    "title": "Ansiedad",
+    "quote": "Nada os preocupe.",
+    "quoteRef": "Filipenses 4, 6",
+    "icon": "leaf-outline",
+    "gradient": "linear-gradient(135deg,#00e0ff,#7c5cff)",
+    "image": "assets/moods/peace.jpg"
+  },
+  {
+    "id": "tristeza",
+    "title": "Tristeza",
+    "quote": "El Señor está cerca de los atribulados.",
+    "quoteRef": "Salmos 34, 19",
+    "icon": "cloud-outline",
+    "gradient": "linear-gradient(135deg,#ff007a,#ffb000)",
+    "image": "assets/moods/hope.jpg"
+  },
+  {
+    "id": "gratitud",
+    "title": "Gratitud",
+    "quote": "Dad gracias en toda ocasión.",
+    "quoteRef": "1 Tesalonicenses 5, 18",
+    "icon": "sparkles-outline",
+    "gradient": "linear-gradient(135deg,#00ffa3,#007aff)",
+    "image": "assets/moods/gratitude.jpg"
+  },
+  {
+    "id": "fuerza",
+    "title": "Fuerza",
+    "quote": "Te fortalezco, te auxilio, te sostengo.",
+    "quoteRef": "Isaías 41, 10",
+    "icon": "flash-outline",
+    "gradient": "linear-gradient(135deg,#ffb000,#7c5cff)",
+    "image": "assets/moods/strength.jpg"
+  },
+  {
+    "id": "miedo",
+    "title": "Miedo",
+    "quote": "Nada temo, porque tú vas conmigo.",
+    "quoteRef": "Salmos 23, 4",
+    "icon": "shield-outline",
+    "gradient": "linear-gradient(135deg,#3a7bd5,#3a6073)",
+    "image": "assets/moods/fear.jpg"
+  },
+  {
+    "id": "soledad",
+    "title": "Soledad",
+    "quote": "Nunca te dejaré ni te abandonaré.",
+    "quoteRef": "Hebreos 13, 5",
+    "icon": "person-outline",
+    "gradient": "linear-gradient(135deg,#232526,#414345)",
+    "image": "assets/moods/lonely.jpg"
+  },
+  {
+    "id": "duda",
+    "title": "Duda",
+    "quote": "Confía en el Señor con toda el alma.",
+    "quoteRef": "Proverbios 3, 5",
+    "icon": "help-outline",
+    "gradient": "linear-gradient(135deg,#4e54c8,#8f94fb)",
+    "image": "assets/moods/doubt.jpg"
+  },
+  {
+    "id": "esperanza",
+    "title": "Esperanza",
+    "quote": "Daros un porvenir y una esperanza.",
+    "quoteRef": "Jeremías 29, 11",
+    "icon": "sunny-outline",
+    "gradient": "linear-gradient(135deg,#f7971e,#ffd200)",
+    "image": "assets/moods/hope2.jpg"
+  },
+  {
+    "id": "perdon",
+    "title": "Perdón",
+    "quote": "El Señor os ha perdonado: haced vosotros lo mismo.",
+    "quoteRef": "Colosenses 3, 13",
+    "icon": "heart-outline",
+    "gradient": "linear-gradient(135deg,#ff9a9e,#fad0c4)",
+    "image": "assets/moods/forgiveness.jpg"
+  },
+  {
+    "id": "ira",
+    "title": "Ira",
+    "quote": "Lenta para hablar y lenta a la ira.",
+    "quoteRef": "Santiago 1, 19",
+    "icon": "flame-outline",
+    "gradient": "linear-gradient(135deg,#ff416c,#ff4b2b)",
+    "image": "assets/moods/anger.jpg"
+  },
+  {
+    "id": "amor",
+    "title": "Amor",
+    "quote": "Dios es amor.",
+    "quoteRef": "1 Juan 4, 8",
+    "icon": "rose-outline",
+    "gradient": "linear-gradient(135deg,#ff758c,#ff7eb3)",
+    "image": "assets/moods/love.jpg"
+  },
+  {
+    "id": "enfermedad",
+    "title": "Enfermedad",
+    "quote": "Él sana los corazones destrozados.",
+    "quoteRef": "Salmos 147, 3",
+    "icon": "medkit-outline",
+    "gradient": "linear-gradient(135deg,#00c6ff,#0072ff)",
+    "image": "assets/moods/illness.jpg"
+  },
+  {
+    "id": "trabajo",
+    "title": "Trabajo",
+    "quote": "Lo que hacéis, hacedlo con toda el alma.",
+    "quoteRef": "Colosenses 3, 23",
+    "icon": "briefcase-outline",
+    "gradient": "linear-gradient(135deg,#434343,#000000)",
+    "image": "assets/moods/work.jpg"
+  },
+  {
+    "id": "tentacion",
+    "title": "Tentación",
+    "quote": "Dios es fiel.",
+    "quoteRef": "1 Corintios 10, 13",
+    "icon": "warning-outline",
+    "gradient": "linear-gradient(135deg,#c94b4b,#4b134f)",
+    "image": "assets/moods/temptation.jpg"
+  },
+  {
+    "id": "confianza",
+    "title": "Confianza",
+    "quote": "En Dios confío y no temo.",
+    "quoteRef": "Salmos 56, 5",
+    "icon": "infinite-outline",
+    "gradient": "linear-gradient(135deg,#11998e,#38ef7d)",
+    "image": "assets/moods/trust.jpg"
+  }
+]

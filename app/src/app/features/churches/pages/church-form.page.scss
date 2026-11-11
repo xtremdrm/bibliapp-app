@@ -1,0 +1,140 @@
+// Layout only; colours and type come from the Misal tokens in styles.scss.
+
+.fields {
+  display: grid;
+  gap: 22px;
+}
+
+.field-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.field-label {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--paper-2);
+}
+
+.field-error {
+  margin-top: 6px;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--rubric);
+}
+
+// Underline-only controls (textarea, select, compact inputs)
+.m-textarea,
+.m-select,
+.m-field {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  border-bottom: 1px solid var(--rule-strong);
+  border-radius: 0;
+  outline: none;
+  background: transparent;
+  color: var(--paper);
+  font: 17px var(--font-sans);
+
+  &::placeholder {
+    color: var(--paper-3);
+  }
+
+  &:focus {
+    border-bottom-color: var(--paper-2);
+  }
+}
+
+.m-textarea {
+  min-height: 46px;
+  padding: 10px 0;
+  line-height: 1.45;
+  resize: vertical;
+}
+
+.m-select,
+.m-field {
+  min-height: 44px;
+  padding: 0;
+}
+
+.m-select {
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+
+  option {
+    background: var(--ink-2);
+    color: var(--paper);
+  }
+}
+
+.m-field[type="time"] {
+  color-scheme: dark;
+}
+
+.section {
+  margin-top: 32px;
+}
+
+.section-label {
+  margin-bottom: 10px;
+}
+
+.check-row {
+  display: flex;
+  width: 100%;
+  min-height: 56px;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-serif);
+  font-size: 19px;
+  --size: 20px;
+  --border-radius: 2px;
+  --border-width: 1px;
+  --border-color: var(--rule-strong);
+  --border-color-checked: var(--rubric);
+  --checkbox-background: transparent;
+  --checkbox-background-checked: var(--rubric);
+  --checkmark-color: var(--ink);
+}
+
+.schedule-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 0 14px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.schedule-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 16px;
+
+  .wide {
+    grid-column: 1 / -1;
+  }
+}
+
+.m-icon-btn {
+  flex-shrink: 0;
+  margin-right: -10px;
+
+  &:disabled {
+    opacity: 0.4;
+  }
+}
+
+.add-btn {
+  color: var(--paper);
+}
+
+.submit {
+  width: 100%;
+  margin-top: 36px;
+}

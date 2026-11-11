@@ -1,0 +1,236 @@
+{
+  "version": "1.0",
+  "language": "es",
+  "categories": [
+    { "id": "basicas", "title": "Oraciones básicas" },
+    { "id": "manana", "title": "Por la mañana" },
+    { "id": "noche", "title": "Por la noche" },
+    { "id": "maria", "title": "Virgen María" },
+    { "id": "misa", "title": "Misa y comunión" },
+    { "id": "mesa", "title": "Bendición de la mesa" },
+    { "id": "angelus", "title": "Ángelus" },
+    { "id": "rosario", "title": "Santo Rosario" }
+  ],
+  "items": [
+    {
+      "id": "senal-cruz",
+      "title": "La señal de la Cruz",
+      "categoryId": "basicas",
+      "body": [
+        "Por la Señal de la Santa Cruz / de nuestros enemigos / líbranos, Señor, Dios nuestro.",
+        "En el nombre del Padre, y del Hijo, y del Espíritu Santo. Amén."
+      ]
+    },
+    {
+      "id": "credo",
+      "title": "Credo",
+      "categoryId": "basicas",
+      "body": [
+        "Creo en un solo Dios, Padre todopoderoso, Creador del cielo y de la tierra, de todo lo visible y lo invisible.",
+        "Creo en un solo Señor, Jesucristo, Hijo único de Dios, nacido del Padre antes de todos los siglos: Dios de Dios, Luz de Luz, Dios verdadero de Dios verdadero, engendrado, no creado, de la misma naturaleza del Padre, por quien todo fue hecho;",
+        "que por nosotros los hombres, y por nuestra salvación bajó del cielo, y por obra del Espíritu Santo se encarnó de María, la Virgen, y se hizo hombre;",
+        "y por nuestra causa fue crucificado en tiempos de Poncio Pilato; padeció y fue sepultado, y resucitó al tercer día, según las escrituras, y subió al cielo, y está sentado a la derecha de Dios Padre;",
+        "y de nuevo vendrá con gloria para juzgar a vivos y muertos, y su reino no tendrá fin.",
+        "Creo en el Espíritu Santo, Señor y dador de vida, que procede del Padre y del Hijo, que con el Padre y el Hijo recibe una misma adoración y gloria, y que habló por los profetas.",
+        "Creo en la Iglesia, que es una, santa, católica y apostólica.",
+        "Confieso que hay un solo Bautismo para el perdón de los pecados.",
+        "Espero la resurrección de los muertos y la vida del mundo futuro. Amén."
+      ]
+    },
+    {
+      "id": "padre-nuestro",
+      "title": "Padre Nuestro",
+      "categoryId": "basicas",
+      "body": [
+        "Padre nuestro, que estás en el cielo, santificado sea tu nombre; venga a nosotros tu reino; hágase tu voluntad en la tierra como en el cielo.",
+        "Danos hoy nuestro pan de cada día; perdona nuestras ofensas, como también nosotros perdonamos a los que nos ofenden; no nos dejes caer en la tentación, y líbranos del mal. Amén."
+      ]
+    },
+    {
+      "id": "ave-maria",
+      "title": "Ave María",
+      "categoryId": "basicas",
+      "body": [
+        "Dios te salve, María; llena eres de gracia; el Señor es contigo; bendita Tú eres entre todas las mujeres, y bendito es el fruto de tu vientre, Jesús.",
+        "Santa María, Madre de Dios, ruega por nosotros, pecadores, ahora y en la hora de nuestra muerte. Amén."
+      ]
+    },
+    {
+      "id": "gloria",
+      "title": "Gloria",
+      "categoryId": "basicas",
+      "body": [
+        "Gloria al Padre y al Hijo y al Espíritu Santo.",
+        "Como era en un principio, ahora y siempre, por los siglos de los siglos. Amén."
+      ]
+    },
+
+    {
+      "id": "ofrecimiento-manana",
+      "title": "Ofrecimiento por la mañana",
+      "categoryId": "manana",
+      "body": [
+        "Ven, Espíritu Santo, inflama nuestro corazón en las ansias redentoras del Corazón de Cristo, para que ofrezcamos de veras nuestras personas y obras, en unión con Él, por la redención del mundo.",
+        "Señor mío y Dios mío Jesucristo: Por el Corazón Inmaculado de María me consagro a tu Corazón, y me ofrezco contigo al Padre en tu santo sacrificio del altar, con mi oración y mi trabajo, sufrimientos y alegrías de hoy, en reparación de nuestros pecados y para que venga a nosotros tu reino.",
+        "Te pido en especial:",
+        "• Por el Papa y sus intenciones.",
+        "• Por nuestro Obispo y sus intenciones.",
+        "• Por nuestro Párroco sus intenciones."
+      ]
+    },
+
+    {
+      "id": "por-la-noche",
+      "title": "Por la noche",
+      "categoryId": "noche",
+      "body": [
+        "Señor y Dios mío: te doy gracias por haberme guardado durante este día que se acaba. Concédeme saber reconocer y agradecer tus beneficios.",
+        "En un momento de silencio reconocemos la ayuda de Dios en los actos buenos que hayamos hecho. Te pido perdón por todo lo que he ofendido en este día.",
+        "Se hace el examen de conciencia repasando las acciones del día y pidiendo perdón por nuestros pecados. Se toma un contrición como para el día siguiente; y al final se reza el acto de contrición y se termina con la Salve."
+      ]
+    },
+    {
+      "id": "acto-contricion",
+      "title": "Acto de Contrición",
+      "categoryId": "noche",
+      "body": [
+        "Señor mío Jesucristo, Dios y Hombre verdadero, Creador, Padre y Redentor mío; por ser Vos quien sois, bondad infinita, y porque os amo sobre todas las cosas, me pesa de todo corazón de haberos ofendido;",
+        "también me pesa porque podéis castigarme con las penas del infierno. Ayudado de vuestra divina gracia, propongo firmemente nunca más pecar, confesarme y cumplir la penitencia que me fuere impuesta. Amén."
+      ]
+    },
+
+    {
+      "id": "a-la-virgen-maria",
+      "title": "A la Virgen María",
+      "categoryId": "maria",
+      "body": [
+        "Bendita Sea Tu Pureza y eternamente lo sea, pues todo un Dios se recrea en tan graciosa belleza.",
+        "A Ti, celestial Princesa, Virgen Sagrada María, yo te ofrezco en este día alma, vida y corazón. Mírame con compasión, no me dejes, Madre mía."
+      ]
+    },
+    {
+      "id": "salve",
+      "title": "Salve",
+      "categoryId": "maria",
+      "body": [
+        "Dios te salve, Reina y Madre de misericordia; vida, dulzura y esperanza nuestra; Dios te salve.",
+        "A Ti llamamos los desterrados hijos de Eva; a Ti suspiramos, gimiendo y llorando, en este valle de lágrimas.",
+        "Ea, pues, Señora, Abogada nuestra, vuelve a nosotros esos tus ojos misericordiosos; y después de este destierro muéstranos a Jesús, fruto bendito de tu vientre.",
+        "¡Oh clemente, oh piadosa, oh dulce Virgen María!",
+        "Ruega por nosotros, Santa Madre de Dios, para que seamos dignos de alcanzar las promesas de Nuestro Señor Jesucristo. Amén."
+      ]
+    },
+
+    {
+      "id": "alma-de-cristo",
+      "title": "Alma de Cristo",
+      "categoryId": "misa",
+      "body": [
+        "Alma de Cristo, santifícame.",
+        "Cuerpo de Cristo, sálvame.",
+        "Sangre de Cristo, embriágame.",
+        "Agua del costado de Cristo, lávame.",
+        "Pasión de Cristo, confórtame.",
+        "Oh buen Jesús, óyeme.",
+        "Dentro de tus llagas, escóndeme.",
+        "No permitas que me aparte de ti.",
+        "Del maligno enemigo, defiéndeme.",
+        "En la hora de mi muerte, llámame.",
+        "Y mándame ir a ti, para que con tus santos te alabe, por los siglos de los siglos. Amén."
+      ]
+    },
+    {
+      "id": "tomad-senor",
+      "title": "Tomad, Señor",
+      "categoryId": "misa",
+      "body": [
+        "Tomad, Señor, y recibid toda mi libertad, mi memoria, mi entendimiento y toda mi voluntad, todo mi haber y mi poseer, vos me lo disteis, a vos, Señor, lo torno, todo es vuestro, disponed a toda vuestra voluntad, dadme vuestro amor y gracia, que esta me basta."
+      ]
+    },
+    {
+      "id": "gloria-misa",
+      "title": "Gloria (Misa)",
+      "categoryId": "misa",
+      "body": [
+        "Gloria a Dios en el cielo y en la tierra paz a los hombres que ama el Señor. Por tu inmensa gloria te alabamos, te bendecimos, te adoramos, te glorificamos, te damos gracias. Señor Dios, Rey celestial, Dios Padre todopoderoso.",
+        "Señor, Hijo único, Jesucristo, Señor Dios, Cordero de Dios, Hijo del Padre: Tú que quitas el pecado del mundo, ten piedad de nosotros; tú que quitas el pecado del mundo, atiende nuestra súplica; tú que estás sentado a la derecha del Padre, ten piedad de nosotros: porque sólo tú eres Santo, sólo tú Señor, sólo tú Altísimo, Jesucristo, con el Espíritu Santo en la gloria de Dios Padre. Amén."
+      ]
+    },
+    {
+      "id": "comunion-espiritual",
+      "title": "Comunión espiritual",
+      "categoryId": "misa",
+      "body": [
+        "Creo, Jesús mío, que estáis realmente presente en el Santísimo Sacramento del Altar. Os amo sobre todas las cosas y deseo recibiros en mi alma.",
+        "Pero como ahora no puedo recibiros sacramentado, venid a lo menos espiritualmente a mi corazón. Y como si ya os hubiese recibido, os abrazo y me uno todo a Vos. No permitáis, Señor, que jamás me separe de Vos. Amén."
+      ]
+    },
+
+    {
+      "id": "bendicion-mesa-antes",
+      "title": "Bendición de la mesa (Antes de comer)",
+      "categoryId": "mesa",
+      "body": [
+        "Bendice, Señor, a cuantos hoy comemos este pan.",
+        "Bendice a quienes lo hicieron, a quienes no lo tendrán y haz que juntos lo comamos en la Mesa Celestial."
+      ]
+    },
+    {
+      "id": "bendicion-mesa-despues",
+      "title": "Bendición de la mesa (Después de comer)",
+      "categoryId": "mesa",
+      "body": [
+        "Gracias por todo, Señor, pues diste al cuerpo alimento; da a las almas el sustento de tu gracia y de tu amor."
+      ]
+    },
+
+    {
+      "id": "angelus",
+      "title": "El Ángelus",
+      "categoryId": "angelus",
+      "body": [],
+      "lines": [
+        { "role": "V", "text": "El ángel del Señor anunció a María" },
+        { "role": "R", "text": "Y concibió por obra y gracia del Espíritu Santo." },
+        { "role": "V", "text": "He aquí la esclava del Señor" },
+        { "role": "R", "text": "Hágase en mí según tu palabra." },
+        { "role": "V", "text": "El Verbo se hizo carne" },
+        { "role": "R", "text": "Y habitó entre nosotros." },
+        { "role": "V", "text": "Ruega por nosotros, Santa Madre de Dios" },
+        { "role": "R", "text": "Para que seamos dignos de alcanzar las promesas de Nuestro Señor Jesucristo." },
+        {
+          "role": "T",
+          "text": "Oración: Derrama, Señor, tu gracia sobre nuestros corazones; para que los que hemos conocido, por el anuncio del ángel, la encarnación de tu Hijo Jesucristo, lleguemos por su pasión y cruz, a la gloria de la resurrección. Por Jesucristo nuestro Señor. Amén."
+        }
+      ]
+    },
+
+    {
+      "id": "rosario-misterios",
+      "title": "Misterios del Santo Rosario",
+      "categoryId": "rosario",
+      "body": [
+        "Misterios Gozosos (lunes y jueves):",
+        "1º La Encarnación del Hijo de Dios.",
+        "2º La visita de María a su prima Santa Isabel.",
+        "3º El nacimiento del Hijo de Dios.",
+        "4º La presentación del Niño Jesús en el templo y la purificación de la Virgen María.",
+        "5º El Niño Jesús perdido y hallado en el templo.",
+        "",
+        "Misterios Dolorosos (martes y viernes):",
+        "1º La Oración de Jesús en el huerto.",
+        "2º La flagelación del Señor atado a la columna.",
+        "3º La coronación de espinas.",
+        "4º Jesús con la Cruz a cuestas.",
+        "5º La crucifixión y muerte del Señor.",
+        "",
+        "Misterios Gloriosos (miércoles, sábados y domingos):",
+        "1º La Resurrección del Señor.",
+        "2º La Ascensión del Señor a los cielos.",
+        "3º La Venida del Espíritu Santo.",
+        "4º La Asunción de María en cuerpo y alma a los cielos.",
+        "5º La Coronación de María como Reina y Señora de todo lo creado."
+      ]
+    }
+  ]
+}

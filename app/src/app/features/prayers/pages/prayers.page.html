@@ -1,0 +1,83 @@
+<ion-content>
+  <div class="m-page">
+
+    <header class="head">
+      <h1 class="m-title">Oración</h1>
+      <button
+        type="button"
+        class="m-icon-btn search-toggle"
+        [attr.aria-label]="searchOpen() ? 'Cerrar búsqueda' : 'Buscar oración'"
+        [attr.aria-expanded]="searchOpen()"
+        (click)="toggleSearch()"
+      >
+        <ion-icon [name]="searchOpen() ? 'm-close' : 'm-search'" aria-hidden="true"></ion-icon>
+      </button>
+    </header>
+
+    <label class="m-input search" *ngIf="searchOpen()">
+      <ion-icon name="m-search" aria-hidden="true"></ion-icon>
+      <span class="visually-hidden">Buscar oración</span>
+      <input
+        #searchInput
+        type="search"
+        placeholder="Buscar oración"
+        autocomplete="off"
+        [value]="query()"
+        (input)="onSearchInput($event)"
+      />
+    </label>
+
+    <!-- Rosary of the day -->
+    <section class="rosary">
+      <img
+        class="plate"
+        [src]="rosaryArtSrc"
+        alt=""
+        width="96"
+        height="128"
+        [style.object-position]="rosaryArt?.focus"
+      />
+      <div class="rosary-text">
+        <p class="m-label">Santo Rosario · {{ weekday }}</p>
+        <h2 class="m-heading">{{ todaysMysteries }}</h2>
+        <a class="m-btn pray" [routerLink]="['/tabs/prayers/rosary']">Rezar el Rosario</a>
+      </div>
+    </section>
+
+    <!-- Categories -->
+    <div class="m-tabs cats" role="tablist" aria-label="Categorías">
+      <button type="button" role="tab" class="m-tab" [attr.aria-selected]="activeCategoryId() === null" (click)="clearCategory()">Todas</button>
+      <button
+        type="button"
+        role="tab"
+        class="m-tab"
+        *ngFor="let c of categories()"
+        [attr.aria-selected]="isCatActive(c.id)"
+        (click)="toggleCategory(c.id)"
+      >{{ c.title }}</button>
+    </div>
+
+    <!-- Prayers -->
+    <ng-container *ngIf="grouped().length > 0; else empty">
+      <section class="group" *ngFor="let g of grouped()">
+        <h2 class="m-label" *ngIf="activeCategoryId() === null">{{ g.title }}</h2>
+        <div class="m-list">
+          <a class="m-row" *ngFor="let p of g.items" [routerLink]="['/tabs/prayers', p.id]">
+            <div class="m-row-body">
+              <div class="m-row-title">{{ p.title }}</div>
+              <div class="m-row-sub" *ngIf="preview(p) as sub">{{ sub }}</div>
+            </div>
+            <ion-icon class="m-chevron" name="m-forward" aria-hidden="true"></ion-icon>
+          </a>
+        </div>
+      </section>
+    </ng-container>
+
+    <ng-template #empty>
+      <div class="m-empty" *ngIf="items().length > 0">
+        <div class="m-empty-title">Sin resultados</div>
+      </div>
+    </ng-template>
+
+  </div>
+</ion-content>

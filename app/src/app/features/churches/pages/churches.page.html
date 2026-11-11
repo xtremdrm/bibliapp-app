@@ -1,0 +1,248 @@
+<ion-content [fullscreen]="true">
+  <div class="m-page">
+
+    <h1 class="m-title">Iglesias</h1>
+
+    <p class="m-meta country-notice" *ngIf="isOutsideSpain()">
+      Solo parroquias de España
+    </p>
+
+    <!-- Lista / Mapa -->
+    <div class="m-tabs view-tabs" role="tablist" aria-label="Vista">
+      <button
+        type="button"
+        class="m-tab"
+        role="tab"
+        [attr.aria-selected]="viewMode() !== 'map'"
+        (click)="viewMode() === 'map' && closeMap()"
+      >Lista</button>
+      <button
+        type="button"
+        class="m-tab"
+        role="tab"
+        [attr.aria-selected]="viewMode() === 'map'"
+        [disabled]="loading()"
+        (click)="viewMode() !== 'map' && (searchResults().length ? confirmSearch() : findNearby())"
+      >Mapa</button>
+    </div>
+
+    <!-- Búsqueda -->
+    <div class="search-block" *ngIf="viewMode() !== 'map'">
+      <label class="m-input">
+        <ion-icon name="m-search" aria-hidden="true"></ion-icon>
+        <input
+          type="search"
+          enterkeyhint="search"
+          placeholder="Ciudad, código postal o parroquia"
+          aria-label="Buscar parroquia"
+          [value]="query()"
+          (input)="onNativeQuery($event)"
+          (keyup.enter)="confirmSearch()"
+        />
+        <button
+          *ngIf="query()"
+          type="button"
+          class="m-icon-btn clear-btn"
+          aria-label="Borrar búsqueda"
+          (click)="clearSearch()"
+        >
+          <ion-icon name="m-close"></ion-icon>
+        </button>
+      </label>
+      <!-- Autocomplete: places and postal codes -->
+      <ul class="autocomplete" *ngIf="suggestions().length" role="listbox" aria-label="Sugerencias">
+        <li *ngFor="let s of suggestions()" role="option">
+          <button type="button" class="ac-item" (click)="pickSuggestion(s)">
+            <span class="ac-title">{{ s.title }}</span>
+            <span class="ac-detail">{{ s.detail }}</span>
+          </button>
+        </li>
+      </ul>
+
+    </div>
+
+    <!-- Cargando -->
+    <div *ngIf="loading() && viewMode() !== 'map'" class="m-loading">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+
+    <!-- Error fuera del mapa -->
+    <div *ngIf="!loading() && error() && viewMode() !== 'map'" class="m-empty">
+      <p class="m-empty-sub">{{ error() }}</p>
+      <button type="button" class="m-btn m-btn--outline retry-btn" (click)="findNearby()">
+        Reintentar
+      </button>
+    </div>
+
+    <!-- Mapa -->
+    <section *ngIf="viewMode() === 'map'" class="map-section">
+
+      <p *ngIf="!loading() && error()" class="m-meta map-error">{{ error() }}</p>
+
+      <div class="map-frame">
+        <div id="churches-map" class="leaflet-map"></div>
+
+        <div *ngIf="loading()" class="map-loading">
+          <ion-spinner name="crescent"></ion-spinner>
+        </div>
+      </div>
+
+      <!-- Parroquia seleccionada en el mapa -->
+      <div class="m-sheet selected" *ngIf="selectedChurch() as church">
+        <div class="selected-head">
+          <div class="selected-body">
+            <p class="m-label" *ngIf="church.isMyParish">Mi parroquia</p>
+            <p class="m-label" *ngIf="church.isFavorite && !church.isMyParish">Favorita</p>
+            <h2 class="m-row-title">{{ church.name }}</h2>
+            <p class="m-row-sub">
+              {{ church.city }}<span *ngIf="church.address"> · {{ church.address }}</span>
+            </p>
+          </div>
+          <button
+            type="button"
+            class="m-icon-btn"
+            aria-label="Cerrar"
+            (click)="selectedChurch.set(null)"
+          >
+            <ion-icon name="m-close"></ion-icon>
+          </button>
+        </div>
+
+        <div class="selected-actions">
+          <button type="button" class="m-link" (click)="toggleFavorite($event, church)">
+            {{ isFavorite(church) ? 'Quitar de favoritas' : 'Añadir a favoritas' }}
+          </button>
+          <button type="button" class="m-btn" (click)="openChurch(church)">Ver ficha</button>
+        </div>
+      </div>
+
+      <!-- Lista bajo el mapa -->
+      <section class="section" *ngIf="!loading() && mapChurches().length">
+        <h2 class="m-label section-label">
+          {{ mapChurches().length }} {{ mapChurches().length === 1 ? 'parroquia' : 'parroquias' }}
+        </h2>
+        <div class="m-list">
+          <button
+            type="button"
+            class="m-row"
+            *ngFor="let church of mapChurches(); trackBy: trackByChurchId"
+            (click)="openChurch(church)"
+          >
+            <img *ngIf="church.imageUrl" class="row-thumb" [src]="church.imageUrl" alt="" loading="lazy" />
+            <div class="m-row-body">
+              <div class="m-row-title">{{ church.name }}</div>
+              <div class="m-row-sub">{{ church.address || 'Sin dirección' }}</div>
+            </div>
+            <span class="m-meta row-meta">{{ placeLabel(church) }}</span>
+            <ion-icon class="m-chevron" name="m-forward" aria-hidden="true"></ion-icon>
+          </button>
+        </div>
+      </section>
+
+    </section>
+
+    <!-- Resultados de búsqueda -->
+    <section *ngIf="viewMode() === 'search'" class="section">
+
+      <div class="section-head">
+        <h2 class="m-label">{{ activePlace() ? activePlace()!.title + (activePlace()!.detail ? ' · ' + activePlace()!.detail : '') : 'Parroquias por nombre' }}</h2>
+        <span class="m-meta">{{ searchResults().length }}</span>
+      </div>
+
+      <div *ngIf="!searchResults().length" class="m-empty">
+        <p class="m-empty-title">Sin resultados</p>
+      </div>
+
+      <div class="m-list" *ngIf="searchResults().length">
+        <div
+          class="result-row"
+          *ngFor="let church of searchResults(); trackBy: trackByChurchId"
+        >
+          <button type="button" class="m-row" (click)="openChurch(church)">
+            <img *ngIf="church.imageUrl" class="row-thumb" [src]="church.imageUrl" alt="" loading="lazy" />
+            <div class="m-row-body">
+              <div class="m-row-title">{{ church.name }}</div>
+              <div class="m-row-sub">{{ church.address || 'Sin dirección' }}</div>
+            </div>
+            <span class="m-meta row-meta">{{ placeLabel(church) }}</span>
+          </button>
+          <button
+            type="button"
+            class="m-icon-btn"
+            [class.is-on]="isFavorite(church)"
+            [attr.aria-label]="isFavorite(church) ? 'Quitar de favoritas' : 'Añadir a favoritas'"
+            [attr.aria-pressed]="isFavorite(church)"
+            (click)="toggleFavorite($event, church)"
+          >
+            <ion-icon [name]="isFavorite(church) ? 'm-star-fill' : 'm-star'"></ion-icon>
+          </button>
+        </div>
+      </div>
+
+      <button
+        *ngIf="searchResults().length"
+        type="button"
+        class="m-link map-link"
+        (click)="confirmSearch()"
+      >
+        Ver {{ searchResults().length }} en el mapa
+      </button>
+
+    </section>
+
+    <!-- Inicio -->
+    <ng-container *ngIf="viewMode() === 'idle'">
+
+      <section *ngIf="myParish() as parish" class="section">
+        <h2 class="m-label section-label">Mi parroquia</h2>
+        <div class="m-list">
+          <button type="button" class="m-row" (click)="openChurch(parish)">
+            <img *ngIf="parish.imageUrl" class="row-thumb" [src]="parish.imageUrl" alt="" loading="lazy" />
+            <div class="m-row-body">
+              <div class="m-row-title">{{ parish.name }}</div>
+              <div class="m-row-sub">{{ parish.address || 'Sin dirección' }}</div>
+            </div>
+            <span class="m-meta row-meta">{{ placeLabel(parish) }}</span>
+            <ion-icon class="m-chevron" name="m-forward" aria-hidden="true"></ion-icon>
+          </button>
+        </div>
+      </section>
+
+      <section *ngIf="favoriteChurches().length" class="section">
+        <div class="section-head">
+          <h2 class="m-label">Favoritas</h2>
+          <span class="m-meta">{{ favoriteChurches().length }}</span>
+        </div>
+        <div class="m-list">
+          <button
+            type="button"
+            class="m-row"
+            *ngFor="let church of favoriteChurches(); trackBy: trackByChurchId"
+            (click)="openChurch(church)"
+          >
+            <img *ngIf="church.imageUrl" class="row-thumb" [src]="church.imageUrl" alt="" loading="lazy" />
+            <div class="m-row-body">
+              <div class="m-row-title">{{ church.name }}</div>
+              <div class="m-row-sub">{{ church.address || 'Sin dirección' }}</div>
+            </div>
+            <span class="m-meta row-meta">{{ placeLabel(church) }}</span>
+            <ion-icon class="m-chevron" name="m-forward" aria-hidden="true"></ion-icon>
+          </button>
+        </div>
+      </section>
+
+      <p *ngIf="!myParish() && !favoriteChurches().length && !loading() && !error()" class="m-meta beta-note">
+        Función en fase beta
+      </p>
+
+    </ng-container>
+
+  </div>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end" *ngIf="viewMode() !== 'map'">
+    <ion-fab-button aria-label="Añadir iglesia" (click)="goToCreateChurch()">
+      <ion-icon name="m-plus"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

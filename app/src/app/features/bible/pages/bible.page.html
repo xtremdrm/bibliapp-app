@@ -1,0 +1,130 @@
+<ion-content>
+  <div class="m-page head">
+
+    <h1 class="m-title">Biblia</h1>
+
+    <label class="m-input search" *ngIf="tab() !== 'saved'">
+      <ion-icon name="m-search" aria-hidden="true"></ion-icon>
+      <span class="visually-hidden">Buscar libro</span>
+      <input
+        type="search"
+        placeholder="Buscar libro"
+        autocomplete="off"
+        [value]="q()"
+        (input)="onSearch($event)"
+      />
+    </label>
+
+    <div class="m-tabs tabs" role="tablist" aria-label="Testamento">
+      <button type="button" role="tab" class="m-tab" [attr.aria-selected]="tab() === 'AT'" (click)="setTab('AT')">Antiguo</button>
+      <button type="button" role="tab" class="m-tab" [attr.aria-selected]="tab() === 'NT'" (click)="setTab('NT')">Nuevo</button>
+      <button type="button" role="tab" class="m-tab" [attr.aria-selected]="tab() === 'saved'" (click)="setTab('saved')">
+        Guardados<span class="tab-count" *ngIf="bookmarks().length > 0"> · {{ bookmarks().length }}</span>
+      </button>
+    </div>
+  </div>
+
+  <hr class="m-rule" />
+
+  <div class="m-page body">
+
+    <div class="m-loading" *ngIf="loading()">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+
+    <!-- Books -->
+    <ng-container *ngIf="!loading() && tab() !== 'saved'">
+
+      <ng-container *ngIf="isSearching(); else sectionMode">
+        <p class="m-meta results">
+          {{ filteredBooks().length }} resultado{{ filteredBooks().length !== 1 ? 's' : '' }}
+        </p>
+
+        <ng-container *ngFor="let book of filteredBooks(); trackBy: trackByBook">
+          <ng-container *ngTemplateOutlet="bookRow; context: { $implicit: book }"></ng-container>
+        </ng-container>
+
+        <div class="m-empty" *ngIf="filteredBooks().length === 0">
+          <div class="m-empty-title">Sin resultados</div>
+        </div>
+      </ng-container>
+
+      <ng-template #sectionMode>
+        <section class="section" *ngFor="let section of sectionedBooks(); trackBy: trackBySection">
+          <h2 class="m-label">{{ section.title }}</h2>
+          <ng-container *ngFor="let book of section.books; trackBy: trackByBook">
+            <ng-container *ngTemplateOutlet="bookRow; context: { $implicit: book }"></ng-container>
+          </ng-container>
+        </section>
+      </ng-template>
+
+      <a class="m-credit credit" [routerLink]="['/legal']">
+        La Biblia · Versión oficial de la Conferencia Episcopal Española · © 2010
+      </a>
+    </ng-container>
+
+    <!-- Saved verses -->
+    <ng-container *ngIf="tab() === 'saved'">
+
+      <div class="m-empty" *ngIf="bookmarks().length === 0">
+        <div class="m-empty-title">Sin versículos guardados</div>
+      </div>
+
+      <div class="m-list saved" *ngIf="bookmarks().length > 0">
+        <div class="saved-row" *ngFor="let bm of bookmarks(); trackBy: trackByBm">
+          <button type="button" class="saved-open" (click)="openBookmark(bm)">
+            <span class="saved-ref">{{ bm.bookName }} {{ bm.chapter }}, {{ bm.verse }}</span>
+            <span class="saved-text">{{ bm.text }}</span>
+          </button>
+          <div class="saved-actions">
+            <button type="button" class="m-icon-btn" aria-label="Fijar en el widget" (click)="pinToWidget(bm, $event)">
+              <ion-icon name="m-pin" aria-hidden="true"></ion-icon>
+            </button>
+            <button type="button" class="m-icon-btn" aria-label="Quitar de guardados" (click)="removeBookmark(bm, $event)">
+              <ion-icon name="m-trash" aria-hidden="true"></ion-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+  </div>
+</ion-content>
+
+<ng-template #bookRow let-book>
+  <div class="book">
+    <button
+      type="button"
+      class="toc-row"
+      [attr.aria-expanded]="expandedBookId() === book.id"
+      (click)="toggleBook(book)"
+    >
+      <span class="toc-name">{{ book.name }}</span>
+      <span class="m-leader" aria-hidden="true"></span>
+      <span class="m-meta">{{ book.chapters }}</span>
+    </button>
+
+    <div class="chapters" *ngIf="expandedBookId() === book.id">
+      <div class="chapters-loading" *ngIf="loadingChapters() === book.id">
+        <ion-spinner name="crescent"></ion-spinner>
+      </div>
+      <div class="chapters-grid" *ngIf="loadingChapters() !== book.id && chaptersMap()[book.id]">
+        <button
+          type="button"
+          class="chap"
+          *ngFor="let ch of chaptersMap()[book.id]"
+          [attr.aria-label]="book.name + ', capítulo ' + ch"
+          (click)="openChapter(book.id, ch)"
+        >{{ ch }}</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ion-toast
+  [isOpen]="toastOpen"
+  [message]="toastMessage"
+  [duration]="2200"
+  (didDismiss)="toastOpen = false"
+  position="bottom">
+</ion-toast>

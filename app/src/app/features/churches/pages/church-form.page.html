@@ -1,0 +1,136 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/churches" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ isEdit() ? 'Editar iglesia' : 'Nueva iglesia' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="m-page">
+
+    <section class="fields">
+      <div class="field">
+        <label class="field-label" for="cf-name">Nombre</label>
+        <div class="m-input">
+          <input id="cf-name" type="text" autocomplete="off" [(ngModel)]="form.name" #nameCtrl="ngModel" />
+        </div>
+        <p class="field-error" *ngIf="nameCtrl.touched && !form.name.trim()">Obligatorio</p>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="cf-address">Dirección</label>
+        <div class="m-input">
+          <input id="cf-address" type="text" autocomplete="off" [(ngModel)]="form.address" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="cf-city">Ciudad</label>
+        <div class="m-input">
+          <input id="cf-city" type="text" autocomplete="off" [(ngModel)]="form.city" #cityCtrl="ngModel" />
+        </div>
+        <p class="field-error" *ngIf="cityCtrl.touched && !form.city.trim()">Obligatorio</p>
+      </div>
+
+      <div class="field-pair">
+        <div class="field">
+          <label class="field-label" for="cf-region">Región</label>
+          <div class="m-input">
+            <input id="cf-region" type="text" autocomplete="off" [(ngModel)]="form.region" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="cf-country">País</label>
+          <div class="m-input">
+            <input id="cf-country" type="text" autocomplete="off" [(ngModel)]="form.country" />
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="cf-description">Descripción</label>
+        <textarea id="cf-description" class="m-textarea" rows="3" [(ngModel)]="form.description"></textarea>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="cf-notes">Notas</label>
+        <textarea id="cf-notes" class="m-textarea" rows="2" [(ngModel)]="form.notes"></textarea>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="m-list">
+        <ion-checkbox class="check-row" justify="space-between" labelPlacement="start" [(ngModel)]="form.isFavorite">
+          Favorita
+        </ion-checkbox>
+        <ion-checkbox class="check-row" justify="space-between" labelPlacement="start" [(ngModel)]="form.isMyParish">
+          Mi parroquia
+        </ion-checkbox>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="m-label section-label">Horarios</h2>
+
+      <div class="m-list">
+        <div class="schedule-row" *ngFor="let schedule of schedules; trackBy: trackByScheduleId">
+          <div class="schedule-grid">
+            <select class="m-select" aria-label="Día" [(ngModel)]="schedule.day">
+              <option *ngFor="let day of weekdays" [ngValue]="day.value">{{ day.label }}</option>
+            </select>
+            <input class="m-field" type="time" aria-label="Hora" [(ngModel)]="schedule.time" />
+            <select class="m-select" aria-label="Tipo" [(ngModel)]="schedule.type">
+              <option *ngFor="let option of eventTypes" [ngValue]="option.value">{{ option.label }}</option>
+            </select>
+            <input class="m-field" type="text" aria-label="Etiqueta" placeholder="Etiqueta" [(ngModel)]="schedule.label" />
+            <input class="m-field wide" type="text" aria-label="Notas" placeholder="Notas" [(ngModel)]="schedule.notes" />
+          </div>
+          <button
+            type="button"
+            class="m-icon-btn"
+            aria-label="Quitar horario"
+            (click)="removeSchedule(schedule.id)"
+          >
+            <ion-icon name="m-close"></ion-icon>
+          </button>
+        </div>
+
+        <div class="schedule-row draft">
+          <div class="schedule-grid">
+            <select class="m-select" aria-label="Día" [(ngModel)]="draftSchedule.day">
+              <option *ngFor="let day of weekdays" [ngValue]="day.value">{{ day.label }}</option>
+            </select>
+            <input class="m-field" type="time" aria-label="Hora" [(ngModel)]="draftSchedule.time" />
+            <select class="m-select" aria-label="Tipo" [(ngModel)]="draftSchedule.type">
+              <option *ngFor="let option of eventTypes" [ngValue]="option.value">{{ option.label }}</option>
+            </select>
+            <input class="m-field" type="text" aria-label="Etiqueta" placeholder="Etiqueta" [(ngModel)]="draftSchedule.label" />
+            <input class="m-field wide" type="text" aria-label="Notas" placeholder="Notas" [(ngModel)]="draftSchedule.notes" />
+          </div>
+          <button
+            type="button"
+            class="m-icon-btn add-btn"
+            aria-label="Añadir horario"
+            [disabled]="!draftSchedule.label.trim() || !draftSchedule.time.trim()"
+            (click)="addSchedule()"
+          >
+            <ion-icon name="m-plus"></ion-icon>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <button
+      type="button"
+      class="m-btn submit"
+      [disabled]="!form.name.trim() || !form.city.trim()"
+      (click)="save()"
+    >
+      Guardar
+    </button>
+
+  </div>
+</ion-content>

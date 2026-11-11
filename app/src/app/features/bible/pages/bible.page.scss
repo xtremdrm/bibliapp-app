@@ -1,0 +1,164 @@
+// Biblia; table of contents. Layout only; colours and type come from tokens.
+
+.m-page.head {
+  padding-bottom: 0;
+}
+
+.m-page.body {
+  padding-top: 20px;
+}
+
+.search {
+  margin-top: 18px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.tabs {
+  margin-top: 10px;
+}
+
+.tab-count {
+  color: var(--paper-3);
+  font-weight: 500;
+}
+
+.results {
+  margin-bottom: 8px;
+}
+
+.section + .section {
+  margin-top: 30px;
+}
+
+.section .m-label {
+  margin-bottom: 4px;
+}
+
+// Book row
+.book + .book {
+  border-top: 1px solid var(--rule);
+}
+
+.toc-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 0 10px;
+  border: 0;
+  background: none;
+  color: var(--paper);
+  text-align: left;
+  cursor: pointer;
+  transition: opacity 140ms var(--ease);
+
+  &:active {
+    opacity: 0.6;
+  }
+
+  &[aria-expanded="true"] .toc-name {
+    color: var(--rubric);
+  }
+}
+
+.toc-name {
+  font-family: var(--font-serif);
+  font-size: 21px;
+  line-height: 1.2;
+}
+
+// Chapter grid
+.chapters {
+  padding: 2px 0 12px;
+}
+
+.chapters-loading {
+  display: grid;
+  place-items: center;
+  min-height: 44px;
+}
+
+.chapters-grid {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+}
+
+.chap {
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--paper);
+  font-family: var(--font-serif);
+  font-size: 18px;
+  text-align: center;
+  cursor: pointer;
+
+  &:active {
+    color: var(--rubric);
+  }
+}
+
+// Saved verses
+.saved-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.saved-open {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--paper);
+  text-align: left;
+  cursor: pointer;
+
+  &:active {
+    opacity: 0.6;
+  }
+}
+
+.saved-ref {
+  font-family: var(--font-serif);
+  font-size: 19px;
+  color: var(--paper);
+}
+
+.saved-text {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  line-height: 1.45;
+  color: var(--paper-2);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.saved-actions {
+  display: flex;
+  flex-shrink: 0;
+  margin-right: -10px;
+}
+
+.credit {
+  display: block;
+  text-decoration: none;
+}

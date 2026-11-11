@@ -1,0 +1,75 @@
+ion-content {
+  --background: var(--ink);
+}
+
+.intro {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 40px;
+  text-align: center;
+  pointer-events: none;
+}
+
+.mark .stroke {
+  stroke: var(--rubric);
+  stroke-width: 2.4;
+  stroke-linecap: square;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.stroke-v {
+  animation: draw 420ms cubic-bezier(0.55, 0, 0.3, 1) 80ms forwards;
+}
+
+.stroke-h {
+  animation: draw 320ms cubic-bezier(0.55, 0, 0.3, 1) 420ms forwards;
+}
+
+.wordmark {
+  margin-top: 26px;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 31px;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--paper);
+  opacity: 0;
+  animation: appear 360ms ease-out 560ms forwards;
+}
+
+.divider {
+  width: 36px;
+  height: 1px;
+  margin: 18px 0;
+  background: var(--rule-strong);
+  opacity: 0;
+  animation: appear 360ms ease-out 680ms forwards;
+}
+
+.source {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--paper-2);
+  opacity: 0;
+  animation: appear 360ms ease-out 760ms forwards;
+}
+
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes appear {
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mark .stroke { stroke-dashoffset: 0; animation: none; }
+  .wordmark, .divider, .source { opacity: 1; animation: none; }
+}

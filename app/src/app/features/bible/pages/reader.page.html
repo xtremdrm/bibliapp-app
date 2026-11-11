@@ -1,0 +1,114 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/bible" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ book()?.name }}</ion-title>
+    <ion-buttons slot="end">
+      <button
+        type="button"
+        class="m-icon-btn type-btn"
+        aria-label="Tamaño de letra"
+        [attr.aria-expanded]="typeOpen()"
+        (click)="typeOpen.set(!typeOpen())"
+      >Aa</button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content (click)="onContentTap($event)">
+  @if (typeOpen()) {
+    <div class="type-row">
+      <span class="m-meta">Tamaño</span>
+      <button type="button" class="m-icon-btn" aria-label="Reducir letra" (click)="decFont()">
+        <ion-icon name="m-minus" aria-hidden="true"></ion-icon>
+      </button>
+      <span class="type-value" aria-live="polite">{{ fontSize() }}</span>
+      <button type="button" class="m-icon-btn" aria-label="Aumentar letra" (click)="incFont()">
+        <ion-icon name="m-plus" aria-hidden="true"></ion-icon>
+      </button>
+    </div>
+  }
+
+  <article class="reader" [class.with-sheet]="selectionCount() > 0">
+    @if (loading()) {
+      <div class="m-loading"><ion-spinner name="crescent"></ion-spinner></div>
+    } @else {
+      <header class="opening">
+        <p class="book">{{ book()?.name }}</p>
+        <h1 class="numeral"><span class="visually-hidden">Capítulo </span>{{ chapter() }}</h1>
+      </header>
+
+      <p class="text" lang="es" [style.fontSize.px]="fontSize()">
+        @for (v of verses(); track v.v) {
+          <span
+            class="v"
+            [id]="'verse-' + v.v"
+            role="button"
+            tabindex="0"
+            [attr.aria-pressed]="selected().has(v.v)"
+            [class.sel]="selected().has(v.v)"
+            [class.hl]="highlightedVerse() === v.v"
+            [class.bm]="bookmarkedSet().has(v.v)"
+            (click)="toggleVerse(v.v, $event)"
+            (keydown)="onVerseKey(v.v, $event)"
+          ><sup class="vno">{{ v.v }}</sup>{{ v.t }} </span>
+        }
+      </p>
+
+      <button type="button" class="m-credit credit" (click)="openLegal()">
+        © Conferencia Episcopal Española, 2010
+      </button>
+    }
+  </article>
+
+  <!-- Selection sheet -->
+  @if (selectionCount() > 0) {
+    <div slot="fixed" class="sel-sheet m-sheet" role="region" aria-label="Selección">
+      <div class="sel-head">
+        <div class="sel-info">
+          <div class="sel-ref">{{ selectionRef() }}</div>
+          <div class="m-meta">{{ selectionCount() }} {{ selectionCount() === 1 ? 'versículo' : 'versículos' }}</div>
+        </div>
+        <button type="button" class="m-icon-btn" aria-label="Cerrar selección" (click)="clearSelection()">
+          <ion-icon name="m-close" aria-hidden="true"></ion-icon>
+        </button>
+      </div>
+      <div class="sel-actions">
+        <button type="button" class="act" (click)="copySelected()">
+          <ion-icon name="m-copy" aria-hidden="true"></ion-icon><span>Copiar</span>
+        </button>
+        <button type="button" class="act" [class.on]="allSelectedBookmarked()" (click)="toggleBookmarks()">
+          <ion-icon [name]="allSelectedBookmarked() ? 'm-bookmark-fill' : 'm-bookmark'" aria-hidden="true"></ion-icon>
+          <span>{{ allSelectedBookmarked() ? 'Quitar' : 'Guardar' }}</span>
+        </button>
+        <button type="button" class="act" (click)="openEditor()">
+          <ion-icon name="m-image" aria-hidden="true"></ion-icon><span>Imagen</span>
+        </button>
+        <button type="button" class="act" (click)="shareSelected()">
+          <ion-icon name="m-share" aria-hidden="true"></ion-icon><span>Compartir</span>
+        </button>
+      </div>
+    </div>
+  } @else if (!loading()) {
+    <nav slot="fixed" class="dock" [class.hidden]="!dockVisible()" aria-label="Capítulos">
+      <button type="button" class="m-icon-btn" [disabled]="!canPrev()" aria-label="Capítulo anterior" (click)="goChapter(-1)">
+        <ion-icon name="m-back" aria-hidden="true"></ion-icon>
+      </button>
+      <button type="button" class="dock-center" (click)="goToBookIndex()">
+        {{ book()?.name }} {{ chapter() }}<span class="m-meta"> de {{ totalChapters() }}</span>
+      </button>
+      <button type="button" class="m-icon-btn" [disabled]="!canNext()" aria-label="Capítulo siguiente" (click)="goChapter(1)">
+        <ion-icon name="m-forward" aria-hidden="true"></ion-icon>
+      </button>
+    </nav>
+  }
+
+  <ion-toast
+    [isOpen]="toastOpen()"
+    [message]="toastMessage()"
+    [duration]="1600"
+    position="top"
+    (didDismiss)="toastOpen.set(false)"
+  ></ion-toast>
+</ion-content>

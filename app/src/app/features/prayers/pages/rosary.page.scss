@@ -1,0 +1,158 @@
+// Rosario: layout only; colours and type come from tokens.
+
+// Painting header
+.plate {
+  margin: 0;
+  height: 220px;
+  background: var(--ink-2);
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.credit {
+  padding: 8px var(--gutter) 0;
+}
+
+.m-page.body {
+  padding-top: 14px;
+}
+
+// Bead track (scrolled by centerBead() in the component)
+.beads-track {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 18px calc(-1 * var(--gutter)) 0;
+  padding: 0 50%;
+  min-height: 40px;
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.bead-item {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+
+  &.type-our-father {
+    width: 22px;
+    height: 22px;
+  }
+
+  &.type-cross {
+    width: 22px;
+    height: 22px;
+    color: var(--paper-3);
+  }
+}
+
+.bead-dot {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1px solid var(--rule-strong);
+  transition: background-color 140ms var(--ease), border-color 140ms var(--ease);
+}
+
+.bead-done {
+  .bead-dot {
+    background: var(--paper-3);
+    border-color: var(--paper-3);
+  }
+
+  &.type-cross {
+    color: var(--paper-2);
+  }
+}
+
+.bead-active {
+  .bead-dot {
+    background: var(--rubric);
+    border-color: var(--rubric);
+  }
+
+  &.type-cross {
+    color: var(--rubric);
+  }
+}
+
+.count {
+  margin-top: 12px;
+  text-align: center;
+}
+
+// Current prayer
+.stage {
+  margin-top: 26px;
+  transition: opacity 200ms var(--ease), transform 200ms var(--ease);
+
+  &.slide-left {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+
+  &.slide-right {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+
+  .m-heading {
+    margin-top: 4px;
+  }
+}
+
+.set {
+  margin-top: 4px;
+}
+
+.prayer {
+  margin-top: 18px;
+  font-family: var(--font-serif);
+  font-size: 20px;
+  line-height: 1.6;
+  color: var(--paper);
+  white-space: pre-line;
+}
+
+.finished {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 1px solid var(--rule);
+}
+
+.finished-cross {
+  color: var(--rubric);
+}
+
+.finished-title {
+  font-family: var(--font-serif);
+  font-size: 26px;
+  color: var(--paper);
+}
+
+// Navigation
+.nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 32px;
+
+  ion-icon {
+    font-size: 16px;
+  }
+}

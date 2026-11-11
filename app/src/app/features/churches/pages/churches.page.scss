@@ -1,0 +1,285 @@
+// Layout only; colours and type come from the Misal tokens in styles.scss.
+
+.country-notice {
+  margin-top: 10px;
+}
+
+.view-tabs {
+  margin-top: 22px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.search-block {
+  display: grid;
+  gap: 16px;
+  margin-top: 20px;
+
+  input[type="search"]::-webkit-search-cancel-button {
+    display: none;
+  }
+}
+
+.clear-btn {
+  margin-right: -10px;
+}
+
+.nearby-btn {
+  justify-self: start;
+
+  ion-icon {
+    font-size: 18px;
+  }
+}
+
+.m-loading {
+  gap: 12px;
+}
+
+.retry-btn {
+  margin-top: 20px;
+}
+
+.beta-note {
+  margin-top: 28px;
+}
+
+// Sections
+
+.section {
+  margin-top: 32px;
+}
+
+.section-label {
+  margin-bottom: 10px;
+}
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.row-thumb {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+.row-meta {
+  flex-shrink: 0;
+  max-width: 34%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Search result: row + favourite toggle on one hairline
+.result-row {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--rule);
+
+  .m-row {
+    border-bottom: 0;
+  }
+
+  .m-icon-btn {
+    flex-shrink: 0;
+    margin-right: -10px;
+
+    &.is-on {
+      color: var(--rubric);
+    }
+  }
+}
+
+.map-link {
+  margin-top: 12px;
+}
+
+// Map
+
+.map-section {
+  margin-top: 20px;
+}
+
+.map-error {
+  margin-bottom: 12px;
+  color: var(--rubric);
+}
+
+.map-frame {
+  position: relative;
+  border: 1px solid var(--rule-strong);
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.leaflet-map {
+  width: 100%;
+  height: 52vh;
+  min-height: 300px;
+  z-index: 0;
+}
+
+.map-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: var(--ink);
+  opacity: 0.88;
+}
+
+
+
+.selected {
+  margin-top: -1px;
+  padding: 16px 16px 18px;
+  border: 1px solid var(--rule-strong);
+}
+
+.selected-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.selected-body {
+  flex: 1;
+  min-width: 0;
+
+  .m-row-title {
+    margin-top: 2px;
+  }
+}
+
+.selected-head .m-icon-btn {
+  margin: -10px -12px 0 0;
+}
+
+.selected-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 14px;
+}
+
+// Leaflet chrome
+:host ::ng-deep {
+  .leaflet-container {
+    background: var(--ink-2);
+    font-family: var(--font-sans);
+  }
+
+  .leaflet-tile {
+    filter: brightness(0.82) saturate(0.6);
+  }
+
+  .user-pin {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 3px solid var(--ink);
+  }
+
+  .church-marker-icon {
+    background: none !important;
+    border: none !important;
+  }
+
+  .leaflet-control-zoom {
+    border: 1px solid var(--rule-strong) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+
+    a {
+      width: 36px;
+      height: 36px;
+      line-height: 36px;
+      border-radius: 0 !important;
+      border-color: var(--rule) !important;
+      background: var(--ink) !important;
+      color: var(--paper) !important;
+    }
+  }
+
+  .leaflet-control-attribution {
+    background: var(--ink) !important;
+    color: var(--paper-3) !important;
+    font-size: 10px !important;
+
+    a {
+      color: var(--paper-2) !important;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .leaflet-map {
+    height: 60vh;
+  }
+}
+
+/* Autocomplete under the search field */
+.search-block {
+  position: relative;
+}
+
+.autocomplete {
+  position: absolute;
+  z-index: 20;
+  top: 50px;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 4px 0;
+  list-style: none;
+  background: var(--ink-2);
+  border: 1px solid rgba(201, 162, 78, 0.45);
+  border-radius: 6px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.5);
+}
+
+.ac-item {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  width: 100%;
+  min-height: 40px;
+  padding: 8px 12px;
+  border: 0;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+
+  &:active {
+    background: var(--ink-3);
+  }
+}
+
+.ac-title {
+  flex-shrink: 0;
+  font-family: var(--font-serif);
+  font-size: 16px;
+  color: var(--paper);
+}
+
+.ac-detail {
+  overflow: hidden;
+  font-family: var(--font-serif);
+  font-size: 13px;
+  font-style: italic;
+  color: var(--paper-3);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

@@ -1,0 +1,30 @@
+<ion-tabs>
+  <ion-router-outlet [animated]="false"></ion-router-outlet>
+
+  <ion-tab-bar slot="bottom" class="tabbar">
+    <ion-tab-button tab="home" href="/tabs/home">
+      <ion-icon name="m-today" aria-hidden="true"></ion-icon>
+      <ion-label>Hoy</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="bible" href="/tabs/bible">
+      <ion-icon name="m-bible" aria-hidden="true"></ion-icon>
+      <ion-label>Biblia</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="prayers" href="/tabs/prayers">
+      <ion-icon name="m-candle" aria-hidden="true"></ion-icon>
+      <ion-label>Oración</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="moods" href="/tabs/moods">
+      <ion-icon name="m-heart" aria-hidden="true"></ion-icon>
+      <ion-label>Ánimo</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="churches" href="/tabs/churches">
+      <ion-icon name="m-church" aria-hidden="true"></ion-icon>
+      <ion-label>Iglesias</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

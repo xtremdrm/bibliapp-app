@@ -1,0 +1,73 @@
+// Oración: layout only; colours and type come from tokens.
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.search-toggle {
+  margin-right: -10px;
+}
+
+.search {
+  margin-top: 14px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.rosary {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  margin-top: 22px;
+  padding: 20px 0 22px;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+
+  .m-heading {
+    margin-top: 4px;
+  }
+}
+
+.plate {
+  flex-shrink: 0;
+  width: 96px;
+  height: 128px;
+  object-fit: cover;
+  border-radius: 2px;
+  background: var(--ink-2);
+}
+
+.rosary-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.pray {
+  margin-top: 18px;
+}
+
+.cats {
+  margin-top: 6px;
+}
+
+.group {
+  margin-top: 28px;
+
+  .m-label {
+    margin-bottom: 4px;
+  }
+}
+
+.cats + .group,
+.cats + .group:first-of-type {
+  margin-top: 18px;
+}

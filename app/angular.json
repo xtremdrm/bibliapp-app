@@ -1,0 +1,113 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "cli": {
+    "packageManager": "npm"
+  },
+  "newProjectRoot": "projects",
+  "projects": {
+    "app": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "src/main.ts",
+            "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "src/assets",
+              "src/favicon.ico",
+              { "glob": "**/*", "input": "src/pwa", "output": "." }
+            ],
+            "styles": [
+              "node_modules/@fontsource-variable/eb-garamond/wght.css",
+              "node_modules/@fontsource-variable/eb-garamond/wght-italic.css",
+              "node_modules/@fontsource-variable/instrument-sans/wght.css",
+              "node_modules/@fontsource-variable/cormorant-garamond/wght.css",
+              "node_modules/@fontsource-variable/cormorant-garamond/wght-italic.css",
+              "node_modules/@fontsource-variable/cinzel/wght.css",
+              "node_modules/@fontsource-variable/playfair-display/wght.css",
+              "node_modules/@fontsource-variable/playfair-display/wght-italic.css",
+              "node_modules/@fontsource/dm-serif-display/400.css",
+              "node_modules/@fontsource/dm-serif-display/400-italic.css",
+              "node_modules/@fontsource-variable/bodoni-moda/wght.css",
+              "node_modules/@fontsource-variable/bodoni-moda/wght-italic.css",
+              "node_modules/@fontsource-variable/fraunces/wght.css",
+              "node_modules/@fontsource-variable/fraunces/wght-italic.css",
+              "node_modules/@fontsource/instrument-serif/400.css",
+              "node_modules/@fontsource/instrument-serif/400-italic.css",
+              "node_modules/@fontsource/italiana/400.css",
+              "node_modules/@fontsource/marcellus/400.css",
+              "node_modules/@fontsource/libre-caslon-text/400.css",
+              "node_modules/@fontsource/libre-caslon-text/400-italic.css",
+              "node_modules/@fontsource/libre-caslon-text/700.css",
+              "node_modules/@fontsource-variable/crimson-pro/wght.css",
+              "node_modules/@fontsource-variable/crimson-pro/wght-italic.css",
+              "node_modules/@fontsource/spectral/400.css",
+              "node_modules/@fontsource/spectral/400-italic.css",
+              "node_modules/@fontsource/spectral/600.css",
+              "node_modules/@fontsource-variable/lora/wght.css",
+              "node_modules/@fontsource-variable/lora/wght-italic.css",
+              "node_modules/@fontsource/pinyon-script/400.css",
+              "node_modules/@fontsource/italianno/400.css",
+              "node_modules/@fontsource/unifrakturmaguntia/400.css",
+              "node_modules/@fontsource/im-fell-english/400.css",
+              "node_modules/@fontsource/im-fell-english/400-italic.css",
+              "node_modules/@fontsource/uncial-antiqua/400.css",
+              "node_modules/@fontsource/archivo-black/400.css",
+              "node_modules/@fontsource-variable/manrope/wght.css",
+              "src/styles.scss"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "100kb",
+                  "maximumError": "200kb"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "app:build:production"
+            },
+            "development": {
+              "buildTarget": "app:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test"
+        }
+      }
+    }
+  }
+}
